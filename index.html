@@ -60,13 +60,13 @@
             position: fixed;
             width: 379.44px;
             height: 111.61px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(40px) saturate(1.5);
-            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
             border-radius: 200px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 23px 46px rgba(0, 0, 0, 0.08),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.6);
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -88,12 +88,12 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.05) 0%,
                 rgba(255, 255, 255, 0) 50%,
-                rgba(255, 255, 255, 0.02) 100%);
+                rgba(255, 255, 255, 0.01) 100%);
             border-radius: 200px;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .glass-nav::after {
@@ -103,7 +103,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.02"/%3E%3C/svg%3E');
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.01"/%3E%3C/svg%3E');
             border-radius: 200px;
             pointer-events: none;
             mix-blend-mode: overlay;
@@ -124,19 +124,19 @@
         .icon-button {
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(40px) saturate(1.5);
-            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.5);
             z-index: 1;
         }
 
@@ -148,7 +148,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.06) 0%,
                 rgba(255, 255, 255, 0) 100%);
             border-radius: 50%;
             pointer-events: none;
@@ -189,18 +189,18 @@
 
         .control-button {
             padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(40px) saturate(1.5);
-            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
             color: white;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             position: relative;
@@ -215,7 +215,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg,
-                rgba(255, 255, 255, 0.05) 0%,
+                rgba(255, 255, 255, 0.03) 0%,
                 rgba(255, 255, 255, 0) 100%);
             border-radius: 50px;
             pointer-events: none;
