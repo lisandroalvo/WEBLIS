@@ -61,11 +61,13 @@
             width: 379.44px;
             height: 111.61px;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
+            -webkit-backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
             border-radius: 200px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            box-shadow: 0 23px 46px rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -75,11 +77,44 @@
             transition: box-shadow 0.2s ease, transform 0.1s ease;
             touch-action: none;
             user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.16) 0%,
+                rgba(255, 255, 255, 0.02) 50%,
+                rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 200px;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .glass-nav::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.04"/%3E%3C/svg%3E');
+            border-radius: 200px;
+            pointer-events: none;
+            mix-blend-mode: overlay;
         }
 
         .glass-nav.dragging {
             cursor: grabbing;
-            box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                        inset 0 -1px 0 rgba(255, 255, 255, 0.15);
             transform: scale(1.02);
         }
 
@@ -91,6 +126,8 @@
             width: 60px;
             height: 60px;
             background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
+            -webkit-backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -99,12 +136,30 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        .icon-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .icon-button:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .icon-button:active {
@@ -116,6 +171,8 @@
             height: 28px;
             fill: white;
             stroke: white;
+            position: relative;
+            z-index: 1;
         }
 
         .controls {
@@ -134,8 +191,8 @@
         .control-button {
             padding: 15px 30px;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
+            -webkit-backdrop-filter: blur(50px) brightness(1.1) saturate(1.2);
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
@@ -143,15 +200,33 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 50px;
+            pointer-events: none;
         }
 
         .control-button:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .control-button:active {
@@ -161,6 +236,8 @@
         .control-button.active {
             background: rgba(255, 255, 255, 0.35);
             border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         @media (max-width: 768px) {
