@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIARY Case Study | Lisandro Alvo</title>
+    <meta name="description" content="MEDIARY AI Health Assistant - A detailed case study by Lisandro Alvo showcasing AI-powered medical documentation design.">
+    <meta name="keywords" content="MEDIARY, Healthcare AI, Medical Documentation, UI/UX Design, Case Study, SOAP Notes, E&M Coding">
+    <meta name="author" content="Lisandro Alvo">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="MEDIARY Case Study | AI Health Assistant">
+    <meta property="og:description" content="Transforming medical documentation with AI - A comprehensive case study by Lisandro Alvo.">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MEDIARY Case Study | Lisandro Alvo">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(31, 38, 135, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent: #60a5fa;
+            --accent-secondary: #a78bfa;
+            --mediary-primary: #3b82f6;
+            --mediary-secondary: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Liquid Glass Background */
+        .liquid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            mix-blend-mode: screen;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            top: -200px;
+            left: -100px;
+            animation: morph1 25s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            top: 50%;
+            right: -150px;
+            animation: morph2 20s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            bottom: -100px;
+            left: 30%;
+            animation: morph3 22s ease-in-out infinite;
+        }
+
+        .blob-4 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            top: 30%;
+            left: 10%;
+            animation: morph4 18s ease-in-out infinite;
+        }
+
+        @keyframes morph1 {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0, 0) rotate(0deg); }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translate(100px, 50px) rotate(90deg); }
+            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; transform: translate(50px, 100px) rotate(180deg); }
+            75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; transform: translate(-50px, 50px) rotate(270deg); }
+        }
+
+        @keyframes morph2 {
+            0%, 100% { border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%; transform: translate(0, 0) rotate(0deg); }
+            33% { border-radius: 60% 40% 30% 70% / 60% 40% 60% 40%; transform: translate(-80px, 80px) rotate(120deg); }
+            66% { border-radius: 30% 60% 70% 40% / 40% 60% 30% 60%; transform: translate(40px, -40px) rotate(240deg); }
+        }
+
+        @keyframes morph3 {
+            0%, 100% { border-radius: 50% 50% 40% 60% / 40% 60% 40% 60%; transform: translate(0, 0) rotate(0deg); }
+            50% { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; transform: translate(60px, -60px) rotate(180deg); }
+        }
+
+        @keyframes morph4 {
+            0%, 100% { border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%; transform: translate(0, 0); }
+            25% { border-radius: 50% 50% 70% 30% / 50% 50% 50% 50%; transform: translate(40px, 40px); }
+            50% { border-radius: 30% 70% 30% 70% / 70% 30% 70% 30%; transform: translate(-20px, 60px); }
+            75% { border-radius: 50% 50% 50% 50% / 30% 70% 30% 70%; transform: translate(-40px, 20px); }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--mediary-primary), var(--mediary-secondary));
+            z-index: 10001;
+            transition: width 0.1s ease;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-back {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-contact {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-contact:hover {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+        }
+
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .hero-logo {
+            font-size: clamp(60px, 12vw, 120px);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-tagline {
+            font-size: clamp(18px, 3vw, 28px);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .meta-badge {
+            padding: 10px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px var(--glass-shadow);
+        }
+
+        /* Overview Section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .overview-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .overview-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .overview-card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .overview-card li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .overview-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Role Section */
+        .role-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .role-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .role-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .role-icon {
+            font-size: 20px;
+        }
+
+        .role-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Design Showcase */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .showcase-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .showcase-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px var(--glass-shadow);
+        }
+
+        .showcase-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .showcase-caption {
+            padding: 15px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Process Timeline */
+        .process-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+        }
+
+        .process-step {
+            position: relative;
+            padding: 20px 0 40px 30px;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 25px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .process-number {
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .process-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .process-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Impact Stats */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .impact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .impact-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .impact-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .tech-badge {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(167, 139, 250, 0.3));
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .hero-meta {
+                gap: 10px;
+            }
+
+            .meta-badge {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-timeline {
+                padding-left: 20px;
+            }
+
+            .process-step {
+                padding-left: 20px;
+            }
+
+            .process-step::before {
+                left: -24px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 60px 15px;
+            }
+
+            .glass-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Animated Liquid Glass Background -->
+    <div class="liquid-background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-back">
+            <span>←</span> Back to Portfolio
+        </a>
+        <div class="nav-logo">MEDIARY</div>
+        <a href="index.html#contact" class="nav-contact">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-logo">MEDIARY</h1>
+            <p class="hero-tagline">Transforming Medical Documentation with AI</p>
+            <div class="hero-meta">
+                <span class="meta-badge">Senior UI/UX Designer</span>
+                <span class="meta-badge">Jun 2024 - Nov 2025</span>
+                <span class="meta-badge">New York, NY</span>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-value">1+ Hour</span>
+                    <span class="hero-stat-label">Saved Daily</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">HIPAA</span>
+                    <span class="hero-stat-label">Compliant</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">Real-time</span>
+                    <span class="hero-stat-label">AI Processing</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="overview">
+            <h2 class="section-title">Project <span>Overview</span></h2>
+            <div class="overview-grid">
+                <div class="glass-card overview-card animate-on-scroll">
+                    <h3>The Problem</h3>
+                    <p>Doctors spend 2-3 hours daily on clinical documentation, often working after hours. This administrative burden leads to:</p>
+                    <ul>
+                        <li>Physician burnout and decreased job satisfaction</li>
+                        <li>Reduced face-to-face time with patients</li>
+                        <li>Increased risk of documentation errors</li>
+                        <li>Lower quality of patient care</li>
+                        <li>Delayed insurance claim processing</li>
+                    </ul>
+                </div>
+                <div class="glass-card overview-card animate-on-scroll">
+                    <h3>The Solution</h3>
+                    <p>MEDIARY is an AI-powered ambient medical scribe that revolutionizes clinical documentation:</p>
+                    <ul>
+                        <li>Listens to doctor-patient conversations in real-time</li>
+                        <li>Automatically generates structured SOAP notes</li>
+                        <li>Provides accurate E&M (Evaluation and Management) coding</li>
+                        <li>Creates instant visit summaries</li>
+                        <li>Integrates seamlessly via Supabase backend</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Role Section -->
+        <section class="role">
+            <h2 class="section-title">My <span>Role</span></h2>
+            <div class="glass-card animate-on-scroll">
+                <div class="role-list">
+                    <div class="role-item">
+                        <span class="role-icon">🎨</span>
+                        <span class="role-text">Led end-to-end UI/UX design from concept to launch</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">🤖</span>
+                        <span class="role-text">Designed AI workflow integration for ambient listening</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">📐</span>
+                        <span class="role-text">Created comprehensive design system and component library</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">🔬</span>
+                        <span class="role-text">Conducted user research with 15+ physicians</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">⚡</span>
+                        <span class="role-text">Prototyped interactive flows in Figma</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">🗄️</span>
+                        <span class="role-text">Collaborated on Supabase backend integration</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">🔐</span>
+                        <span class="role-text">Designed for HIPAA compliance and security</span>
+                    </div>
+                    <div class="role-item">
+                        <span class="role-icon">📱</span>
+                        <span class="role-text">Created responsive mobile and tablet experiences</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="features">
+            <h2 class="section-title">Key <span>Features</span></h2>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🎙️</div>
+                    <div class="feature-title">Ambient Recording</div>
+                    <div class="feature-desc">Captures natural doctor-patient conversations without interruption</div>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📝</div>
+                    <div class="feature-title">Auto SOAP Notes</div>
+                    <div class="feature-desc">Generates structured Subjective, Objective, Assessment, Plan notes</div>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">💉</div>
+                    <div class="feature-title">E&M Coding</div>
+                    <div class="feature-desc">Automated medical coding based on visit complexity</div>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Real-time Summaries</div>
+                    <div class="feature-desc">Instant after-visit summaries for patients</div>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">HIPAA Compliant</div>
+                    <div class="feature-desc">Bank-level encryption and security protocols</div>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🗄️</div>
+                    <div class="feature-title">Supabase Backend</div>
+                    <div class="feature-desc">Scalable, real-time database infrastructure</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Showcase Section -->
+        <section class="showcase">
+            <h2 class="section-title">Design <span>Showcase</span></h2>
+            <div class="showcase-grid">
+                <div class="showcase-item animate-on-scroll">
+                    <div class="showcase-image">
+                        <!-- MEDIARY DASHBOARD IMAGE - Replace with user SVG -->
+                        Dashboard Interface
+                    </div>
+                    <div class="showcase-caption">Main Dashboard - Real-time encounter overview</div>
+                </div>
+                <div class="showcase-item animate-on-scroll">
+                    <div class="showcase-image">
+                        <!-- MEDIARY NOTE-TAKING IMAGE - Replace with user SVG -->
+                        Note-Taking Screen
+                    </div>
+                    <div class="showcase-caption">Ambient Recording - Live transcription view</div>
+                </div>
+                <div class="showcase-item animate-on-scroll">
+                    <div class="showcase-image">
+                        <!-- MEDIARY SOAP NOTES IMAGE - Replace with user SVG -->
+                        SOAP Note Output
+                    </div>
+                    <div class="showcase-caption">Generated SOAP Notes - Structured documentation</div>
+                </div>
+                <div class="showcase-item animate-on-scroll">
+                    <div class="showcase-image">
+                        <!-- MEDIARY MOBILE IMAGE - Replace with user SVG -->
+                        Mobile View
+                    </div>
+                    <div class="showcase-caption">Mobile Experience - On-the-go access</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process">
+            <h2 class="section-title">Design <span>Process</span></h2>
+            <div class="glass-card animate-on-scroll">
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="process-number">Step 01</div>
+                        <div class="process-title">Research</div>
+                        <div class="process-desc">Interviewed 15+ doctors to understand their documentation pain points, workflow challenges, and requirements for an AI-powered solution.</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">Step 02</div>
+                        <div class="process-title">Ideation</div>
+                        <div class="process-desc">Sketched user flows, mapped AI integration points, and explored different approaches to ambient listening and note generation.</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">Step 03</div>
+                        <div class="process-title">Prototyping</div>
+                        <div class="process-desc">Created high-fidelity Figma prototypes with interactive components, animations, and realistic data to simulate the full experience.</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">Step 04</div>
+                        <div class="process-title">Testing</div>
+                        <div class="process-desc">Validated designs with medical professionals, gathered feedback on usability, accuracy expectations, and workflow integration.</div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">Step 05</div>
+                        <div class="process-title">Development</div>
+                        <div class="process-desc">Collaborated with engineers on Supabase backend integration, ensured design fidelity, and launched the MVP to initial users.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="impact">
+            <h2 class="section-title">Impact & <span>Results</span></h2>
+            <div class="impact-grid">
+                <div class="impact-card animate-on-scroll">
+                    <div class="impact-value">1-2 hrs</div>
+                    <div class="impact-label">Saved Daily Per Doctor</div>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <div class="impact-value">95%</div>
+                    <div class="impact-label">Note Accuracy</div>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <div class="impact-value">HIPAA</div>
+                    <div class="impact-label">Fully Compliant</div>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <div class="impact-value">Real-time</div>
+                    <div class="impact-label">Processing Speed</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section class="tech">
+            <h2 class="section-title">Tech <span>Stack</span></h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Figma</span>
+                <span class="tech-badge">AI/ML</span>
+                <span class="tech-badge">Supabase</span>
+                <span class="tech-badge">Healthcare</span>
+                <span class="tech-badge">SOAP Notes</span>
+                <span class="tech-badge">E&M Coding</span>
+                <span class="tech-badge">HIPAA</span>
+                <span class="tech-badge">Real-time DB</span>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <section class="navigation">
+            <div class="nav-buttons">
+                <a href="index.html" class="btn btn-secondary">← Back to All Work</a>
+                <a href="index.html#contact" class="btn btn-primary">Get In Touch</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Lisandro Alvo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = progress + '%';
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
