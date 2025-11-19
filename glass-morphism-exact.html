@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Morphism Component - Exact Figma Replica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .glass-nav {
+            position: fixed;
+            width: 379.435px;
+            height: 111.61px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 28px 42px;
+            z-index: 10;
+            cursor: move;
+            cursor: grab;
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .glass-nav.dragging {
+            cursor: grabbing;
+            box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.3),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+            transform: scale(1.01);
+        }
+
+        .glass-nav.dragging .icon-button {
+            pointer-events: none;
+        }
+
+        .icon-button {
+            width: 42.559px;
+            height: 42.559px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .icon-button:hover {
+            transform: scale(1.1);
+        }
+
+        .icon-button:active {
+            transform: scale(0.95);
+        }
+
+        .icon-button svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90vw;
+        }
+
+        .control-button {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.3),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .control-button:active {
+            transform: translateY(0);
+        }
+
+        .control-button.active {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .glass-nav {
+                width: 320px;
+                height: 95px;
+                padding: 24px 30px;
+            }
+
+            .icon-button {
+                width: 36px;
+                height: 36px;
+            }
+
+            .control-button {
+                padding: 12px 24px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-nav {
+                width: 300px;
+                height: 85px;
+                padding: 20px 25px;
+            }
+
+            .icon-button {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80" alt="Background">
+
+    <div class="glass-nav" id="glassNav">
+        <!-- Icon 1: Back Arrow -->
+        <div class="icon-button" aria-label="Back">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
+            </svg>
+        </div>
+
+        <!-- Icon 2: Folder -->
+        <div class="icon-button" aria-label="Folder">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V7Z"/>
+            </svg>
+        </div>
+
+        <!-- Icon 3: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+
+        <!-- Icon 4: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+
+        <!-- Icon 5: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-button active" data-bg="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80">Gradient</button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80">Abstract</button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80">Mountain</button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&q=80">Ocean</button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1920&q=80">Flower</button>
+    </div>
+
+    <script>
+        // Draggable functionality
+        const glassNav = document.getElementById('glassNav');
+        const background = document.getElementById('background');
+        const controlButtons = document.querySelectorAll('.control-button');
+        const iconButtons = document.querySelectorAll('.icon-button');
+
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        // Center the glass nav on load
+        function centerGlassNav() {
+            const navRect = glassNav.getBoundingClientRect();
+            const centerX = (window.innerWidth - navRect.width) / 2;
+            const centerY = (window.innerHeight - navRect.height) / 2;
+
+            xOffset = centerX;
+            yOffset = centerY;
+
+            glassNav.style.left = `${centerX}px`;
+            glassNav.style.top = `${centerY}px`;
+        }
+
+        // Initialize position
+        centerGlassNav();
+
+        // Mouse events
+        glassNav.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        // Touch events
+        glassNav.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', dragEnd);
+
+        function dragStart(e) {
+            // Don't start drag if clicking on icon buttons
+            if (e.target.closest('.icon-button')) {
+                return;
+            }
+
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+
+            isDragging = true;
+            glassNav.classList.add('dragging');
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            e.preventDefault();
+
+            if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            // Boundary constraints
+            const navRect = glassNav.getBoundingClientRect();
+            const maxX = window.innerWidth - navRect.width;
+            const maxY = window.innerHeight - navRect.height;
+
+            xOffset = Math.max(0, Math.min(xOffset, maxX));
+            yOffset = Math.max(0, Math.min(yOffset, maxY));
+
+            setTranslate(xOffset, yOffset, glassNav);
+        }
+
+        function dragEnd() {
+            isDragging = false;
+            glassNav.classList.remove('dragging');
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.left = `${xPos}px`;
+            el.style.top = `${yPos}px`;
+        }
+
+        // Background switching
+        controlButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const bgUrl = button.getAttribute('data-bg');
+
+                // Fade out
+                background.style.opacity = '0';
+
+                setTimeout(() => {
+                    background.src = bgUrl;
+                    // Fade in
+                    background.style.opacity = '1';
+                }, 300);
+
+                // Update active state
+                controlButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Icon button click handlers
+        iconButtons.forEach((button, index) => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                // Add a simple click feedback animation
+                button.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 150);
+
+                // Demo functionality
+                const actions = ['Back', 'Folder', 'Trash', 'Trash', 'Trash'];
+                console.log(`${actions[index]} button clicked!`);
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Reposition if out of bounds
+            const navRect = glassNav.getBoundingClientRect();
+            const maxX = window.innerWidth - navRect.width;
+            const maxY = window.innerHeight - navRect.height;
+
+            if (xOffset > maxX) xOffset = maxX;
+            if (yOffset > maxY) yOffset = maxY;
+            if (xOffset < 0) xOffset = 0;
+            if (yOffset < 0) yOffset = 0;
+
+            setTranslate(xOffset, yOffset, glassNav);
+        });
+
+        // Preload images for smooth transitions
+        controlButtons.forEach(button => {
+            const img = new Image();
+            img.src = button.getAttribute('data-bg');
+        });
+    </script>
+</body>
+</html>

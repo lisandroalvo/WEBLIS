@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Navigation Component</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&h=1080&fit=crop&q=80') center center / cover fixed;
+        }
+
+        .instruction {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            z-index: 100;
+            animation: pulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(-50%) scale(1.02);
+            }
+        }
+
+        .glass-nav {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 379.435px;
+            height: 111.61px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+            border-radius: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+                        inset 0 1px 2px 0 rgba(255, 255, 255, 0.5),
+                        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 28px 42px;
+            z-index: 10;
+            cursor: move;
+            cursor: grab;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+            touch-action: none;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 200px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glass-nav.dragging {
+            cursor: grabbing;
+            box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.5),
+                        inset 0 1px 3px 0 rgba(255, 255, 255, 0.6),
+                        inset 0 -1px 3px 0 rgba(0, 0, 0, 0.15);
+            transform: translate(-50%, -50%) scale(1.02);
+        }
+
+        .glass-nav.dragging .icon-button {
+            pointer-events: none;
+        }
+
+        .icon-button {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .icon-button:hover {
+            transform: scale(1.1);
+        }
+
+        .icon-button:active {
+            transform: scale(0.95);
+        }
+
+        .icon-button svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90vw;
+        }
+
+        .control-button {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+            -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.25),
+                        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+            color: white;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 100%);
+            border-radius: 50px;
+            pointer-events: none;
+        }
+
+        .control-button:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px 0 rgba(31, 38, 135, 0.35),
+                        inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .control-button:active {
+            transform: translateY(0);
+        }
+
+        .control-button.active {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px 0 rgba(31, 38, 135, 0.4),
+                        inset 0 1px 2px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .glass-nav {
+                width: 340px;
+                height: 100px;
+                padding: 24px 36px;
+            }
+
+            .icon-button {
+                width: 38px;
+                height: 38px;
+            }
+
+            .instruction {
+                font-size: 13px;
+                padding: 10px 20px;
+            }
+
+            .control-button {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-nav {
+                width: 300px;
+                height: 90px;
+                padding: 20px 30px;
+            }
+
+            .icon-button {
+                width: 34px;
+                height: 34px;
+            }
+
+            .icon-button svg {
+                stroke-width: 2.2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="instruction">Drag to test the glass effect</div>
+
+    <div class="glass-nav" id="glassNav">
+        <!-- Icon 1: Back Arrow -->
+        <div class="icon-button" aria-label="Back">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
+            </svg>
+        </div>
+
+        <!-- Icon 2: Folder -->
+        <div class="icon-button" aria-label="Folder">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V7Z"/>
+            </svg>
+        </div>
+
+        <!-- Icon 3: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+
+        <!-- Icon 4: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+
+        <!-- Icon 5: Trash -->
+        <div class="icon-button" aria-label="Trash">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"/>
+                <path d="M10 11V17M14 11V17"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-button active" data-bg="https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&h=1080&fit=crop&q=80">
+            <span>🎨</span> Gradient
+        </button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&q=80">
+            <span>🏔️</span> Mountain
+        </button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&h=1080&fit=crop&q=80">
+            <span>🌅</span> Ocean
+        </button>
+        <button class="control-button" data-bg="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1920&h=1080&fit=crop&q=80">
+            <span>🌺</span> Flower
+        </button>
+    </div>
+
+    <script>
+        // Draggable functionality
+        const glassNav = document.getElementById('glassNav');
+        const controlButtons = document.querySelectorAll('.control-button');
+        const iconButtons = document.querySelectorAll('.icon-button');
+
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+
+        // Mouse events
+        glassNav.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        // Touch events
+        glassNav.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', dragEnd);
+
+        function dragStart(e) {
+            // Don't start drag if clicking on icon buttons
+            if (e.target.closest('.icon-button')) {
+                return;
+            }
+
+            const rect = glassNav.getBoundingClientRect();
+
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - rect.left;
+                initialY = e.touches[0].clientY - rect.top;
+            } else {
+                initialX = e.clientX - rect.left;
+                initialY = e.clientY - rect.top;
+            }
+
+            isDragging = true;
+            glassNav.classList.add('dragging');
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            e.preventDefault();
+
+            let clientX, clientY;
+
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            currentX = clientX - initialX;
+            currentY = clientY - initialY;
+
+            // Boundary constraints
+            const rect = glassNav.getBoundingClientRect();
+            const maxX = window.innerWidth - rect.width;
+            const maxY = window.innerHeight - rect.height;
+
+            currentX = Math.max(0, Math.min(currentX, maxX));
+            currentY = Math.max(0, Math.min(currentY, maxY));
+
+            glassNav.style.left = `${currentX}px`;
+            glassNav.style.top = `${currentY}px`;
+            glassNav.style.transform = 'none';
+        }
+
+        function dragEnd() {
+            isDragging = false;
+            glassNav.classList.remove('dragging');
+        }
+
+        // Background switching
+        controlButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const bgUrl = button.getAttribute('data-bg');
+
+                // Fade transition
+                document.body.style.transition = 'background-image 0.5s ease';
+                document.body.style.backgroundImage = `url('${bgUrl}')`;
+
+                // Update active state
+                controlButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Icon button click handlers
+        iconButtons.forEach((button, index) => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                // Add click feedback animation
+                button.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 150);
+
+                // Demo functionality
+                const actions = ['Back', 'Folder', 'Trash', 'Trash', 'Trash'];
+                console.log(`${actions[index]} button clicked!`);
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const rect = glassNav.getBoundingClientRect();
+            const style = window.getComputedStyle(glassNav);
+
+            // If not centered anymore, constrain to viewport
+            if (style.transform === 'none') {
+                const maxX = window.innerWidth - rect.width;
+                const maxY = window.innerHeight - rect.height;
+
+                let left = parseFloat(glassNav.style.left) || 0;
+                let top = parseFloat(glassNav.style.top) || 0;
+
+                left = Math.max(0, Math.min(left, maxX));
+                top = Math.max(0, Math.min(top, maxY));
+
+                glassNav.style.left = `${left}px`;
+                glassNav.style.top = `${top}px`;
+            }
+        });
+    </script>
+</body>
+</html>
