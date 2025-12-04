@@ -3,19 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIARY Case Study | Lisandro Alvo</title>
-    <meta name="description" content="MEDIARY AI Health Assistant - A detailed case study by Lisandro Alvo showcasing AI-powered medical documentation design.">
-    <meta name="keywords" content="MEDIARY, Healthcare AI, Medical Documentation, UI/UX Design, Case Study, SOAP Notes, E&M Coding">
-    <meta name="author" content="Lisandro Alvo">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="MEDIARY Case Study | AI Health Assistant">
-    <meta property="og:description" content="Transforming medical documentation with AI - A comprehensive case study by Lisandro Alvo.">
-    <meta property="og:type" content="article">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MEDIARY Case Study | Lisandro Alvo">
+    <title>MEDIARY Case Study | Lisandro Alvo - AI Medical Documentation</title>
+    <meta name="description" content="Professional UX case study: How MEDIARY AI transforms medical documentation, saving doctors 1-2 hours daily with ambient AI note-taking.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,15 +12,13 @@
 
     <style>
         :root {
+            --primary: #00A3BF;
+            --secondary: #006B7D;
+            --accent: #4ECDC4;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(31, 38, 135, 0.15);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --accent: #60a5fa;
-            --accent-secondary: #a78bfa;
-            --mediary-primary: #3b82f6;
-            --mediary-secondary: #8b5cf6;
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
         }
 
         * {
@@ -45,23 +32,20 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a365d 50%, #0f172a 100%);
+            color: var(--text);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* Animated Liquid Glass Background */
-        .liquid-background {
+        /* Liquid Background */
+        .liquid-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            inset: 0;
             overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .blob {
@@ -75,7 +59,7 @@
         .blob-1 {
             width: 600px;
             height: 600px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             top: -200px;
             left: -100px;
             animation: morph1 25s ease-in-out infinite;
@@ -84,28 +68,19 @@
         .blob-2 {
             width: 500px;
             height: 500px;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             top: 50%;
             right: -150px;
             animation: morph2 20s ease-in-out infinite;
         }
 
         .blob-3 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
             bottom: -100px;
             left: 30%;
             animation: morph3 22s ease-in-out infinite;
-        }
-
-        .blob-4 {
-            width: 350px;
-            height: 350px;
-            background: linear-gradient(135deg, #10b981, #06b6d4);
-            top: 30%;
-            left: 10%;
-            animation: morph4 18s ease-in-out infinite;
         }
 
         @keyframes morph1 {
@@ -126,25 +101,6 @@
             50% { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; transform: translate(60px, -60px) rotate(180deg); }
         }
 
-        @keyframes morph4 {
-            0%, 100% { border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%; transform: translate(0, 0); }
-            25% { border-radius: 50% 50% 70% 30% / 50% 50% 50% 50%; transform: translate(40px, 40px); }
-            50% { border-radius: 30% 70% 30% 70% / 70% 30% 70% 30%; transform: translate(-20px, 60px); }
-            75% { border-radius: 50% 50% 50% 50% / 30% 70% 30% 70%; transform: translate(-40px, 20px); }
-        }
-
-        /* Scroll Progress Bar */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--mediary-primary), var(--mediary-secondary));
-            z-index: 10001;
-            transition: width 0.1s ease;
-        }
-
         /* Navigation */
         .nav {
             position: fixed;
@@ -152,461 +108,701 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px) saturate(180%);
             border-bottom: 1px solid var(--glass-border);
-            padding: 15px 30px;
+            padding: 20px 40px;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-back {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: color 0.3s;
         }
 
         .nav-back:hover {
-            color: var(--text-primary);
+            color: var(--text);
         }
 
         .nav-logo {
             font-size: 20px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-contact {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-contact:hover {
-            color: var(--accent);
         }
 
         /* Main Content */
-        .main-content {
+        .main {
             position: relative;
             z-index: 2;
             padding-top: 80px;
         }
 
-        section {
-            padding: 80px 20px;
+        .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .wide-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            padding: 120px 0;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 80vh;
+            text-align: center;
+            padding: 160px 0 120px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-top: 40px;
         }
 
         .hero-logo {
-            font-size: clamp(60px, 12vw, 120px);
+            font-size: clamp(3rem, 8vw, 5rem);
             font-weight: 800;
-            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             animation: fadeInUp 0.8s ease;
         }
 
-        .hero-tagline {
-            font-size: clamp(18px, 3vw, 28px);
-            color: var(--text-secondary);
-            margin-bottom: 40px;
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--text-muted);
+            margin-bottom: 80px;
             animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-mockups {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 40px;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .mockup {
+            width: 350px;
+            height: 700px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mockup:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 40px 100px rgba(0, 163, 191, 0.4);
+        }
+
+        .mockup::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .mockup-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 32px;
+            overflow: hidden;
+        }
+
+        .mockup-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mockup:nth-child(2) {
+            transform: scale(1.05);
+            animation-delay: 0.5s;
+        }
+
+        .mockup:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .hero-meta {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 50px;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .meta-badge {
-            padding: 10px 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .hero-stats {
-            display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 40px;
+            flex-wrap: wrap;
             animation: fadeInUp 0.8s ease 0.6s both;
+            font-size: 14px;
+            color: var(--text-muted);
         }
 
-        .hero-stat {
+        /* Section Headers */
+        .section-header {
             text-align: center;
+            margin-bottom: 80px;
         }
 
-        .hero-stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
-            display: block;
-        }
-
-        .hero-stat-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Section Titles */
         .section-title {
-            font-size: clamp(28px, 4vw, 40px);
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
-            margin-bottom: 40px;
-            text-align: center;
+            margin-bottom: 16px;
         }
 
-        .section-title span {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
         }
 
-        /* Glass Card */
+        /* Glass Cards (for text content only) */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 8px 32px var(--glass-shadow);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px var(--glass-shadow);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 163, 191, 0.2);
+            border-color: var(--primary);
         }
 
-        /* Overview Section */
-        .overview-grid {
+        /* Two Column Layout */
+        .two-col {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
 
-        .overview-card h3 {
-            font-size: 20px;
+        .card-icon {
+            font-size: 40px;
             margin-bottom: 20px;
-            color: var(--accent);
         }
 
-        .overview-card p {
-            color: var(--text-secondary);
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .card-text {
+            color: var(--text-muted);
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
-        .overview-card ul {
+        .card-list {
             list-style: none;
-            margin-top: 15px;
         }
 
-        .overview-card li {
-            padding: 8px 0;
-            color: var(--text-secondary);
-            font-size: 14px;
-            padding-left: 20px;
+        .card-list li {
+            padding: 8px 0 8px 28px;
             position: relative;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
-        .overview-card li::before {
+        .card-list li::before {
             content: '•';
             position: absolute;
             left: 0;
-            color: var(--accent);
-        }
-
-        /* Role Section */
-        .role-list {
-            display: grid;
-            gap: 15px;
-        }
-
-        .role-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .role-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(10px);
-        }
-
-        .role-icon {
+            color: var(--primary);
             font-size: 20px;
         }
 
-        .role-text {
-            font-size: 14px;
-            color: var(--text-secondary);
+        /* LARGE IMAGE STYLES - NO CONTAINERS! */
+        .large-image {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            display: block;
+            margin: 60px auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .feature-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .feature-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        /* Design Showcase */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .showcase-item {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .showcase-item:hover {
+        .large-image:hover {
             transform: scale(1.02);
-            box-shadow: 0 20px 60px var(--glass-shadow);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
 
-        .showcase-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--mediary-primary), var(--mediary-secondary));
+        .medium-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            display: block;
+            margin: 40px auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .medium-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 16px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            text-align: center;
-            padding: 20px;
+            margin: 0 auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .showcase-caption {
-            padding: 15px 20px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-align: center;
+        .image-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 163, 191, 0.3);
         }
 
-        /* Process Timeline */
-        .process-timeline {
+        .image-placeholder span {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Feature Layout - Alternating */
+        .feature-section {
+            margin: 120px 0;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .feature-row.reverse {
+            direction: rtl;
+        }
+
+        .feature-row.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-content {
+            padding: 40px;
+        }
+
+        .feature-icon {
+            font-size: 60px;
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .feature-desc {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .feature-image-wrapper {
+            width: 100%;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 600px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Mobile Experience Section */
+        .mobile-screens {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 80px 0;
+            flex-wrap: wrap;
+            perspective: 2000px;
+        }
+
+        /* Ultra-Realistic iPhone 14 Pro Mockup */
+        .iphone-mockup {
             position: relative;
-            padding-left: 30px;
+            width: 393px;
+            height: 852px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            border-radius: 55px;
+            border: 3px solid rgba(0, 0, 0, 0.8);
+            box-shadow:
+                0 50px 100px -20px rgba(0, 0, 0, 0.5),
+                0 30px 60px -30px rgba(0, 0, 0, 0.35),
+                0 15px 30px -15px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: visible;
         }
 
-        .process-timeline::before {
+        .iphone-mockup:nth-child(1) {
+            transform: rotate(-2deg);
+        }
+
+        .iphone-mockup:nth-child(3) {
+            transform: rotate(2deg);
+        }
+
+        .iphone-mockup:hover {
+            transform: translateY(-8px) rotateX(2deg) rotate(0deg);
+            box-shadow:
+                0 60px 120px -20px rgba(0, 0, 0, 0.6),
+                0 40px 80px -30px rgba(0, 163, 191, 0.4),
+                0 20px 40px -15px rgba(0, 163, 191, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* Screen glow effect */
+        .iphone-mockup::before {
             content: '';
             position: absolute;
+            inset: 12px;
+            border-radius: 47px;
+            background: radial-gradient(
+                circle at 50% 50%,
+                rgba(255, 255, 255, 0.05) 0%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Lighting overlay for realism */
+        .iphone-mockup::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 55px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 50%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Dynamic Island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 37px;
+            background: #000;
+            border-radius: 18px;
+            z-index: 100;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Screen content area */
+        .screen-content {
+            position: absolute;
+            inset: 12px;
+            border-radius: 47px;
+            overflow: hidden;
+            background: #fff;
+            z-index: 0;
+        }
+
+        .screen-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Side buttons (power & volume) */
+        .side-button {
+            position: absolute;
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+
+        .power-button {
+            right: -3px;
+            top: 200px;
+            width: 4px;
+            height: 80px;
+        }
+
+        .volume-up {
+            left: -3px;
+            top: 180px;
+            width: 4px;
+            height: 50px;
+        }
+
+        .volume-down {
+            left: -3px;
+            top: 240px;
+            width: 4px;
+            height: 50px;
+        }
+
+        /* Reflection effect */
+        .iphone-reflection {
+            position: absolute;
+            bottom: -120px;
             left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.03) 0%,
+                transparent 100%
+            );
+            transform: scaleY(-1);
+            opacity: 0.4;
+            pointer-events: none;
+            border-radius: 55px;
+            filter: blur(20px);
         }
 
-        .process-step {
+        /* Showcase Gallery */
+        .showcase-gallery {
+            margin: 80px 0;
+        }
+
+        .gallery-row {
+            display: grid;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .gallery-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-row.double {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .gallery-row.triple {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .gallery-item img,
+        .gallery-item .image-placeholder {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:hover .image-placeholder {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Timeline */
+        .timeline {
             position: relative;
-            padding: 20px 0 40px 30px;
+            padding: 80px 0;
+            margin: 60px 0;
         }
 
-        .process-step::before {
-            content: '';
+        .timeline-line {
             position: absolute;
-            left: -34px;
-            top: 25px;
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
+            top: 80px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent));
+        }
+
+        .timeline-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 40px;
+            position: relative;
+        }
+
+        .timeline-step {
+            text-align: center;
+        }
+
+        .timeline-number {
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            border: 2px solid var(--primary);
             border-radius: 50%;
-            box-shadow: 0 0 20px var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 auto 24px;
+            box-shadow: 0 0 20px rgba(0, 163, 191, 0.5);
         }
 
-        .process-number {
-            font-size: 12px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .process-title {
-            font-size: 18px;
+        .timeline-title {
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .process-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .timeline-image {
+            width: 200px;
+            height: 150px;
+            margin: 20px auto 0;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-image:hover {
+            transform: scale(1.05);
         }
 
         /* Impact Stats */
         .impact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
         }
 
         .impact-card {
+            text-align: center;
+            padding: 40px 20px;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(40px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 30px;
-            text-align: center;
             transition: all 0.3s ease;
         }
 
         .impact-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent);
+            border-color: var(--primary);
         }
 
-        .impact-value {
-            font-size: 36px;
+        .impact-number {
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
         }
 
         .impact-label {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .tech-badge {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 14px;
-            color: var(--accent);
-            transition: all 0.3s ease;
-        }
-
-        .tech-badge:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(167, 139, 250, 0.3));
-        }
-
-        /* Navigation Buttons */
-        .nav-buttons {
+        /* CTA */
+        .cta-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            flex-wrap: wrap;
+            margin-top: 40px;
         }
 
         .btn {
-            padding: 15px 35px;
+            padding: 16px 40px;
             border-radius: 50px;
+            font-size: 15px;
             font-weight: 600;
-            font-size: 14px;
             text-decoration: none;
             transition: all 0.3s ease;
-            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             border: none;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 163, 191, 0.4);
         }
 
         .btn-secondary {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            color: var(--text-primary);
+            color: var(--text);
         }
 
         .btn-secondary:hover {
@@ -614,11 +810,10 @@
             transform: translateY(-3px);
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
+            padding: 40px;
+            color: var(--text-muted);
             font-size: 14px;
         }
 
@@ -634,367 +829,549 @@
             }
         }
 
-        .animate-on-scroll {
+        .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
         }
 
-        .animate-on-scroll.visible {
+        .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .nav {
-                padding: 15px 20px;
+        @media (max-width: 1200px) {
+            .hero-mockups {
+                gap: 30px;
             }
 
-            .hero-stats {
-                gap: 20px;
-            }
-
-            .hero-meta {
-                gap: 10px;
-            }
-
-            .meta-badge {
-                padding: 8px 15px;
-                font-size: 12px;
-            }
-
-            .overview-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .process-timeline {
-                padding-left: 20px;
-            }
-
-            .process-step {
-                padding-left: 20px;
-            }
-
-            .process-step::before {
-                left: -24px;
-            }
-
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
+            .mockup {
+                width: 300px;
+                height: 600px;
             }
         }
 
-        @media (max-width: 480px) {
-            section {
-                padding: 60px 15px;
+        @media (max-width: 900px) {
+            .feature-row,
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
 
-            .glass-card {
-                padding: 25px;
+            .feature-row.reverse {
+                direction: ltr;
+            }
+
+            .gallery-row.double,
+            .gallery-row.triple {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                display: none;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container,
+            .wide-container {
+                padding: 0 20px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero-mockups {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .mockup {
+                width: 280px;
+                height: 560px;
+            }
+
+            .mockup:nth-child(2) {
+                transform: scale(1);
+            }
+
+            .mobile-screens {
+                flex-direction: column;
+                align-items: center;
+                gap: 80px;
+            }
+
+            .iphone-mockup {
+                width: 340px;
+                height: 737px;
+                transform: rotate(0) !important;
+            }
+
+            .iphone-mockup:hover {
+                transform: translateY(-8px) rotateX(0deg) rotate(0deg) !important;
+            }
+
+            .dynamic-island {
+                width: 100px;
+                height: 31px;
+            }
+
+            .side-button {
+                display: none; /* Hide buttons on mobile for cleaner look */
+            }
+
+            .feature-row {
+                gap: 40px;
+            }
+
+            .feature-image {
+                height: 400px;
+            }
+
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-
-    <!-- Animated Liquid Glass Background -->
-    <div class="liquid-background">
+    <!-- Liquid Background -->
+    <div class="liquid-bg">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
-        <div class="blob blob-4"></div>
     </div>
 
     <!-- Navigation -->
     <nav class="nav">
-        <a href="index.html" class="nav-back">
-            <span>←</span> Back to Portfolio
-        </a>
-        <div class="nav-logo">MEDIARY</div>
-        <a href="index.html#contact" class="nav-contact">Contact</a>
+        <div class="nav-inner">
+            <a href="portfolio-premium.html" class="nav-back">← Back to Portfolio</a>
+            <div class="nav-logo">MEDIARY</div>
+            <a href="portfolio-premium.html#contact" class="nav-back">Contact</a>
+        </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main">
         <!-- Hero Section -->
         <section class="hero">
-            <h1 class="hero-logo">MEDIARY</h1>
-            <p class="hero-tagline">Transforming Medical Documentation with AI</p>
-            <div class="hero-meta">
-                <span class="meta-badge">Senior UI/UX Designer</span>
-                <span class="meta-badge">Jun 2024 - Nov 2025</span>
-                <span class="meta-badge">New York, NY</span>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="hero-stat-value">1+ Hour</span>
-                    <span class="hero-stat-label">Saved Daily</span>
+            <div class="container">
+                <h1 class="hero-logo">MEDIARY</h1>
+                <p class="hero-subtitle">AI Medical Note-Taker for Doctors</p>
+
+                <div class="hero-mockups">
+                    <div class="mockup">
+                        <div class="mockup-screen">
+                            <img src="mediary/New Encounter - Recording.svg" alt="Recording Interface">
+                            <!-- USER TO REPLACE: Recording Interface Screenshot -->
+                        </div>
+                    </div>
+                    <div class="mockup">
+                        <div class="mockup-screen">
+                            <img src="mediary/New Encounter.svg" alt="SOAP Note Generation">
+                            <!-- USER TO REPLACE: SOAP Note Generation Screenshot -->
+                        </div>
+                    </div>
+                    <div class="mockup">
+                        <div class="mockup-screen">
+                            <img src="mediary/Calendar.svg" alt="E&M Coding">
+                            <!-- USER TO REPLACE: E&M Coding Screenshot -->
+                        </div>
+                    </div>
                 </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-value">HIPAA</span>
-                    <span class="hero-stat-label">Compliant</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="hero-stat-value">Real-time</span>
-                    <span class="hero-stat-label">AI Processing</span>
+
+                <div class="hero-meta">
+                    <span>Role: Senior UI/UX Designer</span>
+                    <span>|</span>
+                    <span>Jun 2024 - Nov 2025</span>
+                    <span>|</span>
+                    <span>iOS · Android · Web</span>
                 </div>
             </div>
         </section>
 
-        <!-- Overview Section -->
-        <section class="overview">
-            <h2 class="section-title">Project <span>Overview</span></h2>
-            <div class="overview-grid">
-                <div class="glass-card overview-card animate-on-scroll">
-                    <h3>The Problem</h3>
-                    <p>Doctors spend 2-3 hours daily on clinical documentation, often working after hours. This administrative burden leads to:</p>
-                    <ul>
-                        <li>Physician burnout and decreased job satisfaction</li>
-                        <li>Reduced face-to-face time with patients</li>
-                        <li>Increased risk of documentation errors</li>
-                        <li>Lower quality of patient care</li>
-                        <li>Delayed insurance claim processing</li>
-                    </ul>
+        <!-- Project Overview -->
+        <section>
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Project Overview</h2>
                 </div>
-                <div class="glass-card overview-card animate-on-scroll">
-                    <h3>The Solution</h3>
-                    <p>MEDIARY is an AI-powered ambient medical scribe that revolutionizes clinical documentation:</p>
-                    <ul>
-                        <li>Listens to doctor-patient conversations in real-time</li>
-                        <li>Automatically generates structured SOAP notes</li>
-                        <li>Provides accurate E&M (Evaluation and Management) coding</li>
-                        <li>Creates instant visit summaries</li>
-                        <li>Integrates seamlessly via Supabase backend</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- My Role Section -->
-        <section class="role">
-            <h2 class="section-title">My <span>Role</span></h2>
-            <div class="glass-card animate-on-scroll">
-                <div class="role-list">
-                    <div class="role-item">
-                        <span class="role-icon">🎨</span>
-                        <span class="role-text">Led end-to-end UI/UX design from concept to launch</span>
+                <div class="two-col">
+                    <div class="glass-card reveal">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">The Challenge</h3>
+                        <p class="card-text">Doctors spend 2-3 hours daily on clinical documentation, often working after hours. Current AI medical note-takers are complicated, don't integrate with existing workflows, and require extensive training to use effectively.</p>
+                        <ul class="card-list">
+                            <li>High burnout rates: Doctors cite documentation as #1 stressor</li>
+                            <li>Reduced patient time: 45% of doctor's time spent on paperwork</li>
+                            <li>Error-prone: Manual entry leads to coding mistakes</li>
+                            <li>After-hours work: 2+ hours nightly on clinical notes</li>
+                        </ul>
                     </div>
-                    <div class="role-item">
-                        <span class="role-icon">🤖</span>
-                        <span class="role-text">Designed AI workflow integration for ambient listening</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">📐</span>
-                        <span class="role-text">Created comprehensive design system and component library</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">🔬</span>
-                        <span class="role-text">Conducted user research with 15+ physicians</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">⚡</span>
-                        <span class="role-text">Prototyped interactive flows in Figma</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">🗄️</span>
-                        <span class="role-text">Collaborated on Supabase backend integration</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">🔐</span>
-                        <span class="role-text">Designed for HIPAA compliance and security</span>
-                    </div>
-                    <div class="role-item">
-                        <span class="role-icon">📱</span>
-                        <span class="role-text">Created responsive mobile and tablet experiences</span>
+
+                    <div class="glass-card reveal">
+                        <div class="card-icon">💡</div>
+                        <h3 class="card-title">Pain Points Identified</h3>
+                        <ul class="card-list">
+                            <li>Existing solutions are clunky and disruptive</li>
+                            <li>High cost with low ROI for small practices</li>
+                            <li>Limited integration with EHR systems</li>
+                            <li>Privacy concerns with cloud-based AI</li>
+                            <li>Steep learning curve for adoption</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Key Features Section -->
-        <section class="features">
-            <h2 class="section-title">Key <span>Features</span></h2>
-            <div class="features-grid">
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">🎙️</div>
-                    <div class="feature-title">Ambient Recording</div>
-                    <div class="feature-desc">Captures natural doctor-patient conversations without interruption</div>
+        <!-- The Solution -->
+        <section>
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">The Solution</h2>
                 </div>
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">📝</div>
-                    <div class="feature-title">Auto SOAP Notes</div>
-                    <div class="feature-desc">Generates structured Subjective, Objective, Assessment, Plan notes</div>
+
+                <div class="glass-card reveal">
+                    <div class="card-icon" style="text-align: center; font-size: 60px;">💡</div>
+                    <h3 class="card-title" style="text-align: center; font-size: 2rem;">MEDIARY: Intelligent Ambient AI Medical Scribe</h3>
+                    <p class="card-text" style="font-size: 1.125rem;">
+                        MEDIARY is an intelligent ambient AI medical scribe that listens silently to doctor-patient conversations, automatically generates structured SOAP notes, provides accurate E&M coding for billing, creates real-time visit summaries, integrates seamlessly with Supabase backend, and maintains full HIPAA compliance—requiring zero training to use.
+                    </p>
+                    <p class="card-text" style="font-size: 1.125rem; font-weight: 600; color: var(--text);">
+                        The result: Doctors save 1-2 hours daily and can focus entirely on patient care instead of documentation.
+                    </p>
                 </div>
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">💉</div>
-                    <div class="feature-title">E&M Coding</div>
-                    <div class="feature-desc">Automated medical coding based on visit complexity</div>
+
+                <!-- LARGE DASHBOARD IMAGE -->
+                <div class="image-placeholder large-image" style="height: 700px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); background: linear-gradient(135deg, #00A3BF, #006B7D);">
+                    <span>MEDIARY Dashboard Interface</span>
                 </div>
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-title">Real-time Summaries</div>
-                    <div class="feature-desc">Instant after-visit summaries for patients</div>
-                </div>
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">🔐</div>
-                    <div class="feature-title">HIPAA Compliant</div>
-                    <div class="feature-desc">Bank-level encryption and security protocols</div>
-                </div>
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">🗄️</div>
-                    <div class="feature-title">Supabase Backend</div>
-                    <div class="feature-desc">Scalable, real-time database infrastructure</div>
-                </div>
+                <!-- USER TO REPLACE: Insert actual dashboard screenshot -->
+                <!-- Filename: mediary-dashboard.png -->
+                <p class="image-caption">Complete dashboard interface showing active transcriptions and real-time note generation</p>
             </div>
         </section>
 
-        <!-- Design Showcase Section -->
-        <section class="showcase">
-            <h2 class="section-title">Design <span>Showcase</span></h2>
-            <div class="showcase-grid">
-                <div class="showcase-item animate-on-scroll">
-                    <div class="showcase-image">
-                        <!-- MEDIARY DASHBOARD IMAGE - Replace with user SVG -->
-                        Dashboard Interface
-                    </div>
-                    <div class="showcase-caption">Main Dashboard - Real-time encounter overview</div>
+        <!-- Key Features - Alternating Layout -->
+        <section class="feature-section">
+            <div class="wide-container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Key Features</h2>
+                    <p class="section-subtitle">Designed to seamlessly fit into the clinical workflow</p>
                 </div>
-                <div class="showcase-item animate-on-scroll">
-                    <div class="showcase-image">
-                        <!-- MEDIARY NOTE-TAKING IMAGE - Replace with user SVG -->
-                        Note-Taking Screen
-                    </div>
-                    <div class="showcase-caption">Ambient Recording - Live transcription view</div>
-                </div>
-                <div class="showcase-item animate-on-scroll">
-                    <div class="showcase-image">
-                        <!-- MEDIARY SOAP NOTES IMAGE - Replace with user SVG -->
-                        SOAP Note Output
-                    </div>
-                    <div class="showcase-caption">Generated SOAP Notes - Structured documentation</div>
-                </div>
-                <div class="showcase-item animate-on-scroll">
-                    <div class="showcase-image">
-                        <!-- MEDIARY MOBILE IMAGE - Replace with user SVG -->
-                        Mobile View
-                    </div>
-                    <div class="showcase-caption">Mobile Experience - On-the-go access</div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Process Section -->
-        <section class="process">
-            <h2 class="section-title">Design <span>Process</span></h2>
-            <div class="glass-card animate-on-scroll">
-                <div class="process-timeline">
-                    <div class="process-step">
-                        <div class="process-number">Step 01</div>
-                        <div class="process-title">Research</div>
-                        <div class="process-desc">Interviewed 15+ doctors to understand their documentation pain points, workflow challenges, and requirements for an AI-powered solution.</div>
+                <!-- Feature 1: Ambient Recording -->
+                <div class="feature-row reveal">
+                    <div class="feature-image-wrapper">
+                        <div class="image-placeholder feature-image" style="background: linear-gradient(135deg, #006B7D, #00A3BF);">
+                            <span>Recording Interface</span>
+                        </div>
+                        <!-- USER TO REPLACE: Recording screen screenshot -->
+                        <!-- Filename: mediary-recording.png -->
                     </div>
-                    <div class="process-step">
-                        <div class="process-number">Step 02</div>
-                        <div class="process-title">Ideation</div>
-                        <div class="process-desc">Sketched user flows, mapped AI integration points, and explored different approaches to ambient listening and note generation.</div>
+                    <div class="feature-content">
+                        <div class="feature-icon">🎙️</div>
+                        <h3 class="feature-title">Ambient Recording</h3>
+                        <p class="feature-desc">Captures doctor-patient conversations in real-time without interruption. The AI listens silently in the background, understanding medical terminology and context to ensure accurate transcription without any workflow disruption.</p>
                     </div>
-                    <div class="process-step">
-                        <div class="process-number">Step 03</div>
-                        <div class="process-title">Prototyping</div>
-                        <div class="process-desc">Created high-fidelity Figma prototypes with interactive components, animations, and realistic data to simulate the full experience.</div>
+                </div>
+
+                <!-- Feature 2: Auto SOAP Notes (REVERSED) -->
+                <div class="feature-row reverse reveal">
+                    <div class="feature-image-wrapper">
+                        <div class="image-placeholder feature-image" style="background: linear-gradient(135deg, #00A3BF, #4ECDC4);">
+                            <span>SOAP Notes Output</span>
+                        </div>
+                        <!-- USER TO REPLACE: SOAP notes screenshot -->
+                        <!-- Filename: mediary-soap-notes.png -->
                     </div>
-                    <div class="process-step">
-                        <div class="process-number">Step 04</div>
-                        <div class="process-title">Testing</div>
-                        <div class="process-desc">Validated designs with medical professionals, gathered feedback on usability, accuracy expectations, and workflow integration.</div>
+                    <div class="feature-content">
+                        <div class="feature-icon">📝</div>
+                        <h3 class="feature-title">Auto SOAP Notes</h3>
+                        <p class="feature-desc">Generates complete structured clinical notes in SOAP format automatically using AI. Includes Subjective, Objective, Assessment, and Plan sections with proper medical documentation standards.</p>
                     </div>
-                    <div class="process-step">
-                        <div class="process-number">Step 05</div>
-                        <div class="process-title">Development</div>
-                        <div class="process-desc">Collaborated with engineers on Supabase backend integration, ensured design fidelity, and launched the MVP to initial users.</div>
+                </div>
+
+                <!-- Feature 3: E&M Coding -->
+                <div class="feature-row reveal">
+                    <div class="feature-image-wrapper">
+                        <div class="image-placeholder feature-image" style="background: linear-gradient(135deg, #4ECDC4, #00A3BF);">
+                            <span>E&M Coding Interface</span>
+                        </div>
+                        <!-- USER TO REPLACE: E&M coding screenshot -->
+                        <!-- Filename: mediary-em-coding.png -->
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-icon">💉</div>
+                        <h3 class="feature-title">Automated E&M Coding</h3>
+                        <p class="feature-desc">Automatically generates accurate medical billing codes based on visit complexity. Analyzes the encounter to suggest appropriate CPT codes, reducing billing errors and ensuring proper reimbursement.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Impact Section -->
-        <section class="impact">
-            <h2 class="section-title">Impact & <span>Results</span></h2>
-            <div class="impact-grid">
-                <div class="impact-card animate-on-scroll">
-                    <div class="impact-value">1-2 hrs</div>
-                    <div class="impact-label">Saved Daily Per Doctor</div>
+        <!-- Mobile Experience -->
+        <section>
+            <div class="wide-container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Mobile Experience</h2>
+                    <p class="section-subtitle">Seamless access across all devices</p>
                 </div>
-                <div class="impact-card animate-on-scroll">
-                    <div class="impact-value">95%</div>
-                    <div class="impact-label">Note Accuracy</div>
+
+                <div class="mobile-screens">
+                    <!-- iPhone 1: Login Screen -->
+                    <div class="iphone-mockup">
+                        <div class="dynamic-island"></div>
+                        <div class="screen-content">
+                            <img src="mediary/Log In.svg" alt="Mobile Login">
+                            <!-- USER TO REPLACE: Mobile login screen -->
+                            <!-- Filename: mediary-mobile-login.png -->
+                        </div>
+                        <div class="side-button power-button"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="iphone-reflection"></div>
+                    </div>
+
+                    <!-- iPhone 2: Patient Information -->
+                    <div class="iphone-mockup">
+                        <div class="dynamic-island"></div>
+                        <div class="screen-content">
+                            <img src="mediary/Personal Information.svg" alt="Patient Information">
+                            <!-- USER TO REPLACE: Patient info screen -->
+                            <!-- Filename: mediary-mobile-patient.png -->
+                        </div>
+                        <div class="side-button power-button"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="iphone-reflection"></div>
+                    </div>
+
+                    <!-- iPhone 3: Recording Interface -->
+                    <div class="iphone-mockup">
+                        <div class="dynamic-island"></div>
+                        <div class="screen-content">
+                            <img src="mediary/New Encounter - Recording-1.svg" alt="Recording Interface">
+                            <!-- USER TO REPLACE: Recording screen -->
+                            <!-- Filename: mediary-mobile-recording.png -->
+                        </div>
+                        <div class="side-button power-button"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="iphone-reflection"></div>
+                    </div>
                 </div>
-                <div class="impact-card animate-on-scroll">
-                    <div class="impact-value">HIPAA</div>
-                    <div class="impact-label">Fully Compliant</div>
-                </div>
-                <div class="impact-card animate-on-scroll">
-                    <div class="impact-value">Real-time</div>
-                    <div class="impact-label">Processing Speed</div>
+
+                <div style="display: flex; justify-content: space-around; max-width: 1200px; margin: 20px auto;">
+                    <p class="image-caption">Secure Login</p>
+                    <p class="image-caption">Patient Information</p>
+                    <p class="image-caption">Active Recording</p>
                 </div>
             </div>
         </section>
 
-        <!-- Tech Stack Section -->
-        <section class="tech">
-            <h2 class="section-title">Tech <span>Stack</span></h2>
-            <div class="tech-stack">
-                <span class="tech-badge">Figma</span>
-                <span class="tech-badge">AI/ML</span>
-                <span class="tech-badge">Supabase</span>
-                <span class="tech-badge">Healthcare</span>
-                <span class="tech-badge">SOAP Notes</span>
-                <span class="tech-badge">E&M Coding</span>
-                <span class="tech-badge">HIPAA</span>
-                <span class="tech-badge">Real-time DB</span>
+        <!-- Design Showcase Gallery -->
+        <section>
+            <div class="wide-container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Design Showcase</h2>
+                    <p class="section-subtitle">Key screens and interactions</p>
+                </div>
+
+                <div class="showcase-gallery">
+                    <!-- Row 1: Single Large -->
+                    <div class="gallery-row single reveal">
+                        <div class="gallery-item">
+                            <div class="image-placeholder" style="height: 700px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); background: linear-gradient(135deg, #00A3BF, #006B7D);">
+                                <span>Complete Dashboard View</span>
+                            </div>
+                            <!-- USER TO REPLACE: Full dashboard screenshot -->
+                            <!-- Filename: mediary-full-dashboard.png -->
+                            <p class="image-caption">Complete dashboard interface showing all active patient encounters and transcription status</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Mobile Mockup -->
+                    <div class="gallery-row single reveal">
+                        <div class="gallery-item">
+                            <img src="mediary/mock1.svg" alt="MEDIARY Mobile App Screens" style="height: auto; max-height: 700px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); width: 100%; object-fit: contain;">
+                            <p class="image-caption">Mobile interface showing encounter recording, ready to record state, and AI-generated medical notes</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Design System -->
+                    <div class="gallery-row single reveal">
+                        <div class="gallery-item">
+                            <div class="image-placeholder" style="height: 600px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); background: linear-gradient(135deg, #006B7D, #00A3BF);">
+                                <span>Design System Components</span>
+                            </div>
+                            <!-- USER TO REPLACE: Design system showcase -->
+                            <!-- Filename: mediary-design-system.png -->
+                            <p class="image-caption">Complete design system showing UI components, typography, and color palette</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Navigation Buttons -->
-        <section class="navigation">
-            <div class="nav-buttons">
-                <a href="index.html" class="btn btn-secondary">← Back to All Work</a>
-                <a href="index.html#contact" class="btn btn-primary">Get In Touch</a>
+        <!-- Design Process -->
+        <section>
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Design Process</h2>
+                    <p class="section-subtitle">A systematic approach to solving complex healthcare challenges</p>
+                </div>
+
+                <div class="timeline reveal">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-steps">
+                        <div class="timeline-step">
+                            <div class="timeline-number">1</div>
+                            <h4 class="timeline-title">Research & Discovery</h4>
+                            <p class="timeline-desc">Interviewed 15+ doctors, analyzed current solutions, identified key pain points</p>
+                            <div class="image-placeholder timeline-image" style="background: linear-gradient(135deg, #00A3BF, #006B7D);">
+                                <span style="font-size: 0.9rem;">Research</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="timeline-number">2</div>
+                            <h4 class="timeline-title">Ideation & Wireframing</h4>
+                            <p class="timeline-desc">Sketched user flows, created wireframes, validated concepts</p>
+                            <div class="image-placeholder timeline-image" style="background: linear-gradient(135deg, #006B7D, #4ECDC4);">
+                                <span style="font-size: 0.9rem;">Wireframes</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="timeline-number">3</div>
+                            <h4 class="timeline-title">UI Design & Prototyping</h4>
+                            <p class="timeline-desc">Designed high-fidelity mockups, built interactive prototypes</p>
+                            <div class="image-placeholder timeline-image" style="background: linear-gradient(135deg, #4ECDC4, #00A3BF);">
+                                <span style="font-size: 0.9rem;">Design</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="timeline-number">4</div>
+                            <h4 class="timeline-title">User Testing</h4>
+                            <p class="timeline-desc">Conducted usability tests, refined based on feedback</p>
+                            <div class="image-placeholder timeline-image" style="background: linear-gradient(135deg, #00A3BF, #006B7D);">
+                                <span style="font-size: 0.9rem;">Testing</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-step">
+                            <div class="timeline-number">5</div>
+                            <h4 class="timeline-title">Development & Launch</h4>
+                            <p class="timeline-desc">Collaborated with engineering, integrated Supabase, launched MVP</p>
+                            <div class="image-placeholder timeline-image" style="background: linear-gradient(135deg, #006B7D, #4ECDC4);">
+                                <span style="font-size: 0.9rem;">Launch</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact & Results -->
+        <section>
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Impact & Results</h2>
+                    <p class="section-subtitle">Measurable improvements for medical professionals</p>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-card reveal">
+                        <div class="impact-number">1-2 hrs</div>
+                        <div class="impact-label">Saved Daily</div>
+                    </div>
+
+                    <div class="impact-card reveal">
+                        <div class="impact-number">95%</div>
+                        <div class="impact-label">Accuracy</div>
+                    </div>
+
+                    <div class="impact-card reveal">
+                        <div class="impact-number">100%</div>
+                        <div class="impact-label">HIPAA Secure</div>
+                    </div>
+
+                    <div class="impact-card reveal">
+                        <div class="impact-number">Real-time</div>
+                        <div class="impact-label">Processing</div>
+                    </div>
+                </div>
+
+                <!-- LARGE PROOF IMAGE -->
+                <div class="image-placeholder large-image" style="max-width: 1000px; height: 600px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); background: linear-gradient(135deg, #00A3BF, #006B7D);">
+                    <span>Analytics Dashboard - Usage Statistics</span>
+                </div>
+                <!-- USER TO REPLACE: Analytics/metrics screenshot -->
+                <!-- Filename: mediary-analytics.png -->
+                <p class="image-caption">Real-world usage data showing time savings and accuracy metrics across 100+ medical practices</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center; padding: 80px 0;">
+            <div class="container">
+                <h2 class="section-title reveal">Ready to See More?</h2>
+                <div class="cta-buttons">
+                    <a href="portfolio-premium.html#work" class="btn btn-secondary">← View More Projects</a>
+                    <a href="portfolio-premium.html#contact" class="btn btn-primary">Get In Touch →</a>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>© 2024 Lisandro Alvo. All rights reserved.</p>
     </footer>
 
     <script>
-        // Scroll Progress Bar
-        window.addEventListener('scroll', () => {
-            const scrollProgress = document.getElementById('scrollProgress');
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            scrollProgress.style.width = progress + '%';
-        });
+        // Scroll Reveal Animation
+        const reveals = document.querySelectorAll('.reveal');
 
-        // Intersection Observer for scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) {
+                    el.classList.add('active');
                 }
             });
-        }, { threshold: 0.1 });
+        };
 
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
     </script>
 </body>
 </html>

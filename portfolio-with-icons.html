@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lisandro Alvo | UI/UX Designer + Web Developer + AI Coder</title>
+    <meta name="description" content="Portfolio of Lisandro Alvo - UI/UX Designer, Web Developer, and AI Coder specializing in healthcare AI, fintech, and enterprise dashboards.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Simple Icons CDN for brand logos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/index.css">
+
+    <style>
+        :root {
+            --primary: #06b6d4;
+            --secondary: #8b5cf6;
+            --accent: #0ea5e9;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --dark-bg: #1a2332;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #0f1419 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Liquid Background */
+        .liquid-bg {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            mix-blend-mode: screen;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            top: -200px;
+            left: -100px;
+            animation: morph1 20s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+            top: 40%;
+            right: -150px;
+            animation: morph2 25s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            bottom: -100px;
+            left: 30%;
+            animation: morph3 22s ease-in-out infinite;
+        }
+
+        @keyframes morph1 {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0, 0) rotate(0deg); }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translate(50px, -50px) rotate(90deg); }
+            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; transform: translate(-30px, 30px) rotate(180deg); }
+            75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; transform: translate(30px, 50px) rotate(270deg); }
+        }
+
+        @keyframes morph2 {
+            0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translate(0, 0) rotate(0deg); }
+            33% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; transform: translate(-60px, 40px) rotate(120deg); }
+            66% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translate(40px, -30px) rotate(240deg); }
+        }
+
+        @keyframes morph3 {
+            0%, 100% { border-radius: 50% 50% 30% 70% / 50% 70% 30% 50%; transform: translate(0, 0) scale(1); }
+            50% { border-radius: 30% 70% 50% 50% / 70% 30% 70% 30%; transform: translate(40px, -40px) scale(1.1); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .nav-inner {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-link {
+            padding: 10px 18px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Skills Section with Icons */
+        .skills-section {
+            padding: 120px 20px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .skill-column {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            padding: 48px 32px;
+        }
+
+        .skill-column h3 {
+            font-size: 1.75rem;
+            margin-bottom: 32px;
+            color: var(--primary);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .skill-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(6, 182, 212, 0.2);
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+
+        .skill-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .skill-items {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .skill-column {
+                padding: 32px 24px;
+            }
+
+            .nav-inner {
+                padding: 8px 12px;
+                gap: 4px;
+            }
+
+            .nav-link {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Liquid Background -->
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Skills Section with Icon Cards -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Skills & Tools</h2>
+                <p class="section-subtitle">Technologies I use to bring ideas to life</p>
+            </div>
+
+            <div class="skills-container">
+                <!-- Design Column -->
+                <div class="skill-column">
+                    <h3>Design</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #F24E1E;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.354-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg>
+                            </div>
+                            <span class="skill-name">Figma</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #FF61F6;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.888 16.854c-1.173 0-1.852-.709-2.587-1.637l-2.524-3.198-2.524 3.198c-.735.928-1.414 1.637-2.587 1.637-1.656 0-3-1.344-3-3V7.145c0-.552.448-1 1-1s1 .448 1 1v5.709c0 .552.448 1 1 1 .407 0 .65-.194 1.005-.656l2.524-3.198c.328-.415.765-.854 1.68-.854s1.352.439 1.68.854l2.524 3.198c.355.462.598.656 1.005.656.552 0 1-.448 1-1V7.145c0-.552.448-1 1-1s1 .448 1 1v5.709c0 1.656-1.344 3-3 3z"/></svg>
+                            </div>
+                            <span class="skill-name">Adobe XD</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #FF9A00;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.733 0h8.534C19.698 0 24 4.302 24 7.733v8.534C24 19.698 19.698 24 16.267 24H7.733C4.302 24 0 19.698 0 16.267V7.733C0 4.302 4.302 0 7.733 0Zm5.096 12.368c.554.277 1.076.609 1.548.99a6.796 6.796 0 0 1 1.314 1.467c.364.555.653 1.156.857 1.789a6.443 6.443 0 0 1 .307 1.945c0 .693-.096 1.365-.283 2.007a5.647 5.647 0 0 1-.807 1.716 3.977 3.977 0 0 1-1.331 1.202 3.697 3.697 0 0 1-1.789.437c-.634 0-1.218-.122-1.739-.364a4.151 4.151 0 0 1-1.351-.985 4.63 4.63 0 0 1-.896-1.467 4.818 4.818 0 0 1-.322-1.765c0-.634.107-1.237.322-1.798.214-.561.515-1.07.896-1.518a4.262 4.262 0 0 1 1.351-1.058 3.877 3.877 0 0 1 1.739-.383c.268 0 .529.03.783.087V12.39l-.6-.021Zm-1.133 5.326c-.364 0-.696.091-.99.275a2.254 2.254 0 0 0-.753.724 3.314 3.314 0 0 0-.481 1.039 4.665 4.665 0 0 0-.168 1.237c0 .444.056.854.168 1.226.112.373.275.697.481 1.004.207.307.464.555.753.724.29.168.621.267.99.267.364 0 .696-.091.985-.275a2.395 2.395 0 0 0 .778-.724 3.314 3.314 0 0 0 .481-1.039c.112-.397.168-.813.168-1.237 0-.444-.056-.854-.168-1.226a3.143 3.143 0 0 0-.481-1.004 2.267 2.267 0 0 0-.778-.724 2.102 2.102 0 0 0-.985-.267ZM10.52 3.125c0-.26.051-.51.153-.747.102-.237.247-.447.433-.63.186-.183.403-.329.648-.436A2.09 2.09 0 0 1 12.5 1.155c.26 0 .51.052.747.157.236.105.447.252.63.436.183.185.329.4.436.648.107.247.161.5.161.747V16.04h-3.954V3.125Z"/></svg>
+                            </div>
+                            <span class="skill-name">Illustrator</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #31A8FF;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.75 0h-15.5C2.468 0 .75 1.718.75 3.832v16.336C.75 22.282 2.468 24 4.582 24h15.336c2.114 0 3.832-1.718 3.832-3.832V3.832C23.75 1.718 22.032 0 19.918 0zM9.428 18.764c0 .319-.261.58-.58.58H6.644c-.319 0-.58-.261-.58-.58V9.362c0-.319.261-.58.58-.58h2.204c.319 0 .58.261.58.58v9.402zm8.123 0c0 .319-.261.58-.58.58h-2.204c-.319 0-.58-.261-.58-.58v-4.614c0-.524-.196-.998-.531-1.385a1.978 1.978 0 0 0-1.385-.531 1.978 1.978 0 0 0-1.385.531c-.335.387-.531.861-.531 1.385v4.614c0 .319-.261.58-.58.58H7.571c-.319 0-.58-.261-.58-.58V9.362c0-.319.261-.58.58-.58h2.204c.319 0 .58.261.58.58v.261c.531-.524 1.165-.911 1.868-1.126a5.59 5.59 0 0 1 2.113-.335c.711 0 1.396.14 2.048.408a5.194 5.194 0 0 1 1.652 1.126 5.37 5.37 0 0 1 1.126 1.652c.268.652.408 1.337.408 2.048v5.368z"/></svg>
+                            </div>
+                            <span class="skill-name">Photoshop</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #9999FF;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.832 0h16.336C22.282 0 24 1.718 24 3.832v16.336C24 22.282 22.282 24 20.168 24H3.832C1.718 24 0 22.282 0 20.168V3.832C0 1.718 1.718 0 3.832 0Zm7.81 9.063c-.478-.29-1.02-.46-1.59-.46-.933 0-1.692.582-1.692 1.524 0 .758.442 1.245 1.303 1.656l.44.21c.635.302 1.063.64 1.063 1.206 0 .65-.585 1.106-1.455 1.106-.673 0-1.29-.29-1.692-.702l-.388.69c.47.413 1.11.693 2.021.693 1.194 0 2.021-.726 2.021-1.756 0-.917-.585-1.404-1.412-1.807l-.44-.21c-.516-.246-.915-.478-.915-.992 0-.492.433-.874 1.073-.874.478 0 .95.186 1.29.46Zm8.24-2.107h-.892l-2.68 7.028h.898l.74-2.006h2.712l.754 2.006h.926Zm-1.94 4.358 1.063-2.853 1.086 2.853Z"/></svg>
+                            </div>
+                            <span class="skill-name">After Effects</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #FF6B35;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.468 0h-9C2.09 0 .78.781.78 2.156v19.688C.78 23.218 2.09 24 3.468 24h9c1.378 0 2.688-.781 2.688-2.156V2.156C15.156.781 13.846 0 12.468 0zm-1.687 6c.938 0 1.594.469 1.594 1.406v8.844c0 .938-.656 1.406-1.594 1.406-.938 0-1.594-.469-1.594-1.406V7.406c0-.937.656-1.406 1.594-1.406z"/></svg>
+                            </div>
+                            <span class="skill-name">Procreate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Column -->
+                <div class="skill-column">
+                    <h3>Code</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #E34F26;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg>
+                            </div>
+                            <span class="skill-name">HTML5</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #1572B6;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg>
+                            </div>
+                            <span class="skill-name">CSS3</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #F7DF1E;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg>
+                            </div>
+                            <span class="skill-name">JavaScript</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #61DAFB;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38a2.167 2.167 0 0 0-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44a23.476 23.476 0 0 0-3.107-.534A23.892 23.892 0 0 0 12.769 4.7c1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442a22.73 22.73 0 0 0-3.113.538 15.02 15.02 0 0 1-.254-1.42c-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87a25.64 25.64 0 0 1-4.412.005 26.64 26.64 0 0 1-1.183-1.86c-.372-.64-.71-1.29-1.018-1.946a25.17 25.17 0 0 1 1.013-1.954c.38-.66.773-1.286 1.18-1.868A25.245 25.245 0 0 1 12 8.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933a25.952 25.952 0 0 0-1.345-2.32zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493a23.966 23.966 0 0 0-1.1-2.98c.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98a23.142 23.142 0 0 0-1.086 2.964c-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39a25.819 25.819 0 0 0 1.341-2.338zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143a22.005 22.005 0 0 1-2.006-.386c.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295a1.185 1.185 0 0 1-.553-.132c-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></svg>
+                            </div>
+                            <span class="skill-name">React</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #007ACC;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+                            </div>
+                            <span class="skill-name">VS Code</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #F05032;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg>
+                            </div>
+                            <span class="skill-name">Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Tools Column -->
+                <div class="skill-column">
+                    <h3>AI Tools</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #D97757;">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21c-4.963 0-9-4.037-9-9s4.037-9 9-9 9 4.037 9 9-4.037 9-9 9zm-3-9l3 3 3-3" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </div>
+                            <span class="skill-name">Claude</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #00D9FF;">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0L1.5 6v12l10.5 6 10.5-6V6L12 0zm0 3l7.5 4.3v8.4L12 20l-7.5-4.3V7.3L12 3z" fill="currentColor"/></svg>
+                            </div>
+                            <span class="skill-name">Windsurf</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #FF6B9D;">
+                                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7v10l10 5 10-5V7l-10-5zm0 2.2L19 8.5v7l-7 3.5-7-3.5v-7l7-4.3z"/></svg>
+                            </div>
+                            <span class="skill-name">Lovable</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #10B981;">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <span class="skill-name">Midjourney</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #10A37F;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821c0-.69-.024-1.379-.073-2.066a7.94 7.94 0 0 0-.488-1.952 5.01 5.01 0 0 0-1.024-1.583 4.832 4.832 0 0 0-1.536-1.024A7.584 7.584 0 0 0 17.21 2.72a31.508 31.508 0 0 0-2.066-.073C14.455 2.622 13.767 2.61 12 2.61s-2.455.012-3.144.037c-.69 0-1.379.024-2.066.073a7.94 7.94 0 0 0-1.952.488 5.01 5.01 0 0 0-1.583 1.024 4.832 4.832 0 0 0-1.024 1.536A7.584 7.584 0 0 0 2.72 6.79a31.508 31.508 0 0 0-.073 2.066c-.025.689-.037 1.377-.037 3.144s.012 2.455.037 3.144c0 .69.024 1.379.073 2.066.122.695.329 1.353.61 1.952a5.01 5.01 0 0 0 1.024 1.583 4.832 4.832 0 0 0 1.536 1.024 7.584 7.584 0 0 0 1.952.488c.687.049 1.376.073 2.066.073.689.025 1.377.037 3.144.037s2.455-.012 3.144-.037c.69 0 1.379-.024 2.066-.073a7.94 7.94 0 0 0 1.952-.488 5.01 5.01 0 0 0 1.583-1.024 4.832 4.832 0 0 0 1.024-1.536 7.584 7.584 0 0 0 .488-1.952c.049-.687.073-1.376.073-2.066.025-.689.037-1.377.037-3.144s-.012-2.455-.037-3.144zM12 17.07A5.07 5.07 0 1 1 17.07 12 5.07 5.07 0 0 1 12 17.07zm5.268-9.164a1.186 1.186 0 1 1 0-2.372 1.186 1.186 0 0 1 0 2.372z" fill="currentColor"/></svg>
+                            </div>
+                            <span class="skill-name">DALL-E 3</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #74AA9C;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.282 9.821c0-.69-.024-1.379-.073-2.066a7.94 7.94 0 0 0-.488-1.952 5.01 5.01 0 0 0-1.024-1.583 4.832 4.832 0 0 0-1.536-1.024A7.584 7.584 0 0 0 17.21 2.72a31.508 31.508 0 0 0-2.066-.073C14.455 2.622 13.767 2.61 12 2.61s-2.455.012-3.144.037c-.69 0-1.379.024-2.066.073a7.94 7.94 0 0 0-1.952.488 5.01 5.01 0 0 0-1.583 1.024 4.832 4.832 0 0 0-1.024 1.536A7.584 7.584 0 0 0 2.72 6.79a31.508 31.508 0 0 0-.073 2.066c-.025.689-.037 1.377-.037 3.144s.012 2.455.037 3.144c0 .69.024 1.379.073 2.066.122.695.329 1.353.61 1.952a5.01 5.01 0 0 0 1.024 1.583 4.832 4.832 0 0 0 1.536 1.024 7.584 7.584 0 0 0 1.952.488c.687.049 1.376.073 2.066.073.689.025 1.377.037 3.144.037s2.455-.012 3.144-.037c.69 0 1.379-.024 2.066-.073a7.94 7.94 0 0 0 1.952-.488 5.01 5.01 0 0 0 1.583-1.024 4.832 4.832 0 0 0 1.024-1.536 7.584 7.584 0 0 0 .488-1.952c.049-.687.073-1.376.073-2.066.025-.689.037-1.377.037-3.144s-.012-2.455-.037-3.144z" fill="currentColor"/></svg>
+                            </div>
+                            <span class="skill-name">ChatGPT</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #F24E1E;">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.354-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg>
+                            </div>
+                            <span class="skill-name">Figma Make</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #A259FF;">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+                            </div>
+                            <span class="skill-name">Runway ML</span>
+                        </div>
+
+                        <div class="skill-item">
+                            <div class="skill-icon" style="color: #FF3366;">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2"/></svg>
+                            </div>
+                            <span class="skill-name">Stable Diff</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
