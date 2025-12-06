@@ -304,18 +304,24 @@
 
         .hero-name {
             font-size: clamp(3.5rem, 8vw, 6.5rem);
-            font-weight: 300;
+            font-weight: 800;
             line-height: 1;
             letter-spacing: -0.02em;
-            color: #FFFFFF;
             margin: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 0%, #DBEAFE 30%, #60A5FA 70%, #8B5CF6 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: liquidGradient 6s ease-in-out infinite;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.3));
         }
 
         .ai-label {
             font-size: clamp(1.75rem, 3.5vw, 2.5rem);
             font-weight: 600;
-            color: #60A5FA;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-top: 12px;
@@ -323,36 +329,118 @@
             position: relative;
             display: inline-block;
             padding: 12px 24px;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(139, 92, 246, 0.15));
-            border: 2px solid rgba(96, 165, 250, 0.4);
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(96, 165, 250, 0.3),
-                        inset 0 0 20px rgba(96, 165, 250, 0.1);
-            animation: aiGlow 3s ease-in-out infinite;
+            background: linear-gradient(
+                -45deg,
+                rgba(96, 165, 250, 0.2),
+                rgba(139, 92, 246, 0.2),
+                rgba(59, 130, 246, 0.25),
+                rgba(147, 51, 234, 0.2),
+                rgba(96, 165, 250, 0.2)
+            );
+            background-size: 400% 400%;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            box-shadow:
+                0 0 40px rgba(96, 165, 250, 0.4),
+                0 0 80px rgba(139, 92, 246, 0.2),
+                inset 0 0 30px rgba(96, 165, 250, 0.15);
+            animation:
+                aiWaveFlow 8s ease-in-out infinite,
+                aiPulse 4s ease-in-out infinite,
+                aiBorderFlow 6s linear infinite;
+            overflow: hidden;
         }
 
         .ai-label::before {
             content: '';
             position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(139, 92, 246, 0.3));
-            border-radius: 12px;
+            inset: -3px;
+            background: linear-gradient(
+                -45deg,
+                rgba(96, 165, 250, 0.4),
+                rgba(139, 92, 246, 0.4),
+                rgba(59, 130, 246, 0.5),
+                rgba(147, 51, 234, 0.4),
+                rgba(96, 165, 250, 0.4)
+            );
+            background-size: 400% 400%;
+            border-radius: 16px;
             z-index: -1;
-            filter: blur(10px);
-            opacity: 0.6;
+            filter: blur(20px);
+            opacity: 0.8;
+            animation: aiWaveFlow 8s ease-in-out infinite;
         }
 
-        @keyframes aiGlow {
+        .ai-label::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            animation: aiShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes aiWaveFlow {
             0%, 100% {
-                box-shadow: 0 0 30px rgba(96, 165, 250, 0.3),
-                            inset 0 0 20px rgba(96, 165, 250, 0.1);
-                border-color: rgba(96, 165, 250, 0.4);
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 50%;
             }
             50% {
-                box-shadow: 0 0 50px rgba(96, 165, 250, 0.5),
-                            0 0 80px rgba(139, 92, 246, 0.3),
-                            inset 0 0 30px rgba(96, 165, 250, 0.2);
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+        }
+
+        @keyframes aiPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow:
+                    0 0 40px rgba(96, 165, 250, 0.4),
+                    0 0 80px rgba(139, 92, 246, 0.2),
+                    inset 0 0 30px rgba(96, 165, 250, 0.15);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow:
+                    0 0 60px rgba(96, 165, 250, 0.6),
+                    0 0 120px rgba(139, 92, 246, 0.4),
+                    inset 0 0 40px rgba(96, 165, 250, 0.25);
+            }
+        }
+
+        @keyframes aiBorderFlow {
+            0% {
                 border-color: rgba(96, 165, 250, 0.6);
+            }
+            25% {
+                border-color: rgba(139, 92, 246, 0.6);
+            }
+            50% {
+                border-color: rgba(59, 130, 246, 0.7);
+            }
+            75% {
+                border-color: rgba(147, 51, 234, 0.6);
+            }
+            100% {
+                border-color: rgba(96, 165, 250, 0.6);
+            }
+        }
+
+        @keyframes aiShimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            50%, 100% {
+                transform: translateX(200%);
             }
         }
 
@@ -361,6 +449,7 @@
             font-weight: 700;
             color: #E0F2FE;
             line-height: 1.3;
+            white-space: nowrap;
         }
 
         .hero-tagline {
@@ -461,7 +550,97 @@
             width: 100%;
             height: 600px;
             border-radius: 28px;
-            overflow: hidden;
+            overflow: visible;
+        }
+
+        .profile-blend::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(
+                -45deg,
+                rgba(96, 165, 250, 0.6),
+                rgba(139, 92, 246, 0.6),
+                rgba(59, 130, 246, 0.7),
+                rgba(147, 51, 234, 0.6),
+                rgba(96, 165, 250, 0.6)
+            );
+            background-size: 400% 400%;
+            border-radius: 28px;
+            z-index: -1;
+            filter: blur(30px);
+            opacity: 0.8;
+            animation: profileGlowFlow 10s ease-in-out infinite;
+        }
+
+        .profile-blend::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(
+                135deg,
+                rgba(96, 165, 250, 0.3),
+                rgba(139, 92, 246, 0.3),
+                rgba(59, 130, 246, 0.4),
+                rgba(147, 51, 234, 0.3)
+            );
+            background-size: 300% 300%;
+            border-radius: 28px;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.6;
+            animation: profileGlowPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes profileGlowFlow {
+            0%, 100% {
+                background-position: 0% 50%;
+                opacity: 0.6;
+            }
+            25% {
+                background-position: 100% 50%;
+                opacity: 0.8;
+            }
+            50% {
+                background-position: 100% 100%;
+                opacity: 0.7;
+            }
+            75% {
+                background-position: 0% 100%;
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes profileGlowPulse {
+            0%, 100% {
+                background-position: 0% 50%;
+                transform: scale(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes profileImageGlow {
+            0%, 100% {
+                box-shadow:
+                    0 20px 60px rgba(96, 165, 250, 0.3),
+                    0 0 80px rgba(139, 92, 246, 0.2),
+                    inset 0 0 100px rgba(96, 165, 250, 0.1);
+            }
+            33% {
+                box-shadow:
+                    0 20px 70px rgba(139, 92, 246, 0.4),
+                    0 0 100px rgba(96, 165, 250, 0.3),
+                    inset 0 0 120px rgba(139, 92, 246, 0.15);
+            }
+            66% {
+                box-shadow:
+                    0 20px 65px rgba(59, 130, 246, 0.35),
+                    0 0 90px rgba(147, 51, 234, 0.25),
+                    inset 0 0 110px rgba(59, 130, 246, 0.12);
+            }
         }
 
         .profile-blend img {
@@ -470,20 +649,30 @@
             object-fit: cover;
             object-position: 50% 32%;
             border-radius: 28px;
+            position: relative;
+            z-index: 1;
+            box-shadow:
+                0 20px 60px rgba(96, 165, 250, 0.3),
+                0 0 80px rgba(139, 92, 246, 0.2),
+                inset 0 0 100px rgba(96, 165, 250, 0.1);
+            animation: profileImageGlow 6s ease-in-out infinite;
 
             mask-image: radial-gradient(
                 ellipse 88% 82% at 50% 48%,
                 black 35%,
-                rgba(0,0,0,0.95) 55%,
-                rgba(0,0,0,0.75) 70%,
-                rgba(0,0,0,0.4) 85%,
+                rgba(0,0,0,0.98) 50%,
+                rgba(0,0,0,0.85) 65%,
+                rgba(0,0,0,0.5) 80%,
+                rgba(0,0,0,0.2) 90%,
                 transparent 100%
             );
             -webkit-mask-image: radial-gradient(
                 ellipse 88% 82% at 50% 48%,
                 black 35%,
-                rgba(0,0,0,0.95) 55%,
-                rgba(0,0,0,0.75) 70%,
+                rgba(0,0,0,0.98) 50%,
+                rgba(0,0,0,0.85) 65%,
+                rgba(0,0,0,0.5) 80%,
+                rgba(0,0,0,0.2) 90%,
                 rgba(0,0,0,0.4) 85%,
                 transparent 100%
             );
@@ -593,43 +782,25 @@
         }
 
         .trust-logos {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px 0;
-            display: flex;
+            padding: 40px 20px;
             align-items: center;
             justify-content: center;
-        }
-
-        .trust-logos-track {
-            display: flex;
-            gap: 80px;
-            animation: scrollLogos 25s linear infinite;
-            width: max-content;
-            align-items: center;
-            will-change: transform;
-        }
-
-        @keyframes scrollLogos {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
         }
 
         .trust-logo {
             opacity: 0.5;
             transition: all 0.3s ease;
             filter: grayscale(1) brightness(2);
-            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 78px;
+            flex: 0 0 195px;
         }
 
         .trust-logo:hover {
@@ -638,9 +809,58 @@
         }
 
         .trust-logo img {
-            width: 100%;
-            height: auto;
-            max-width: 273px; /* 341px * 0.8 = 272.8px (20% smaller) */
+            height: 78px;
+            width: 195px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .wirestock-logo {
+            flex: 0 0 254px;
+            height: 101px;
+        }
+
+        .wirestock-logo img {
+            height: 101px;
+            width: 254px;
+        }
+
+        .betr-logo {
+            flex: 0 0 137px;
+            height: 55px;
+        }
+
+        .betr-logo img {
+            height: 55px;
+            width: 137px;
+        }
+
+        .waste-connection-logo {
+            flex: 0 0 254px;
+            height: 101px;
+        }
+
+        .waste-connection-logo img {
+            height: 101px;
+            width: 254px;
+        }
+
+        .riddara-logo {
+            flex: 0 0 234px;
+            height: 94px;
+        }
+
+        .riddara-logo img {
+            height: 94px;
+            width: 234px;
+        }
+
+        /* Tablet breakpoint for logos */
+        @media (max-width: 1024px) {
+            .trust-logos {
+                gap: 50px;
+            }
         }
 
         /* Work Section */
@@ -923,12 +1143,18 @@
                 grid-template-columns: 1fr;
             }
 
-            .trust-logo img {
-                max-width: 162px; /* 203px * 0.8 = 162.4px (20% smaller on mobile) */
+            .trust-logos {
+                gap: 40px;
             }
 
-            .trust-logos-track {
-                gap: 60px; /* Less gap on mobile */
+            .trust-logo {
+                height: 60px;
+                flex: 0 0 153px;
+            }
+
+            .trust-logo img {
+                height: 60px;
+                width: 153px;
             }
         }
 
@@ -940,6 +1166,20 @@
 
             .nav a {
                 font-size: 12px;
+            }
+
+            .trust-logos {
+                gap: 30px;
+            }
+
+            .trust-logo {
+                height: 51px;
+                flex: 0 0 128px;
+            }
+
+            .trust-logo img {
+                height: 51px;
+                width: 128px;
             }
         }
     </style>
@@ -1032,76 +1272,41 @@
     <section class="trust-by">
         <h3 class="trust-title">Trusted By</h3>
         <div class="trust-logos">
-            <div class="trust-logos-track">
-                <!-- First set of logos -->
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948589.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948590.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948591.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948592.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948593.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948594.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948595.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948596.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948597.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948598.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948599.svg" alt="Company Logo">
-                </div>
-
-                <!-- Duplicate set for seamless loop -->
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948589.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948590.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948591.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948592.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948593.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948594.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948595.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948596.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948597.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948598.svg" alt="Company Logo">
-                </div>
-                <div class="trust-logo">
-                    <img src="Trust by/Frame 8948599.svg" alt="Company Logo">
-                </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948589.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948590.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948591.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo waste-connection-logo">
+                <img src="Trust by/Frame 8948592.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo betr-logo">
+                <img src="Trust by/Frame 8948599.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948594.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948595.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948596.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948597.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo">
+                <img src="Trust by/Frame 8948598.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo riddara-logo">
+                <img src="Trust by/Frame 8948593.svg" alt="Company Logo">
+            </div>
+            <div class="trust-logo wirestock-logo">
+                <img src="Trust by/Wirestock.svg" alt="Company Logo">
             </div>
         </div>
     </section>
