@@ -766,6 +766,90 @@
             margin-bottom: 20px;
         }
 
+        .about-image {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: visible;
+            margin: 0 auto;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(
+                -45deg,
+                rgba(96, 165, 250, 0.6),
+                rgba(139, 92, 246, 0.6),
+                rgba(59, 130, 246, 0.7),
+                rgba(147, 51, 234, 0.6),
+                rgba(96, 165, 250, 0.6)
+            );
+            background-size: 400% 400%;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(30px);
+            opacity: 0.8;
+            animation: profileGlowFlow 10s ease-in-out infinite;
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(
+                135deg,
+                rgba(96, 165, 250, 0.3),
+                rgba(139, 92, 246, 0.3),
+                rgba(59, 130, 246, 0.4),
+                rgba(147, 51, 234, 0.3)
+            );
+            background-size: 300% 300%;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.6;
+            animation: profileGlowPulse 5s ease-in-out infinite;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            box-shadow:
+                0 20px 60px rgba(96, 165, 250, 0.3),
+                0 0 80px rgba(139, 92, 246, 0.2),
+                inset 0 0 100px rgba(96, 165, 250, 0.1);
+            animation: profileImageGlow 6s ease-in-out infinite;
+
+            mask-image: radial-gradient(
+                circle at center,
+                black 40%,
+                rgba(0,0,0,0.98) 55%,
+                rgba(0,0,0,0.85) 70%,
+                rgba(0,0,0,0.5) 85%,
+                rgba(0,0,0,0.2) 92%,
+                transparent 100%
+            );
+            -webkit-mask-image: radial-gradient(
+                circle at center,
+                black 40%,
+                rgba(0,0,0,0.98) 55%,
+                rgba(0,0,0,0.85) 70%,
+                rgba(0,0,0,0.5) 85%,
+                rgba(0,0,0,0.2) 92%,
+                transparent 100%
+            );
+
+            filter: contrast(1.08) saturate(1.12) brightness(1.03)
+                    drop-shadow(0 30px 80px rgba(0, 0, 0, 0.5));
+        }
+
         /* Trust By Section */
         .trust-by {
             padding: 80px 24px;
@@ -918,43 +1002,63 @@
         }
 
         /* Skills Section */
-        .skills-grid {
+        .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .skill-card {
+        .tool-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 32px;
+            border-radius: 16px;
+            padding: 24px 16px;
             transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
         }
 
-        .skill-card:hover {
+        .tool-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(96, 165, 250, 0.3);
-            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(96, 165, 250, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.15);
         }
 
-        .skill-icon {
+        .tool-icon {
             font-size: 2.5rem;
-            margin-bottom: 16px;
+            line-height: 1;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .skill-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 8px;
+        .tool-icon svg,
+        .tool-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .tool-icon img[alt="AI"] {
+            filter: brightness(0) invert(1);
+        }
+
+        .tool-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: #E0F2FE;
-        }
-
-        .skill-card p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
+            margin: 0;
         }
 
         /* Education Section */
@@ -1086,6 +1190,11 @@
             .about-content {
                 grid-template-columns: 1fr;
                 text-align: center;
+            }
+
+            .about-image {
+                width: 300px;
+                height: 300px;
             }
         }
 
@@ -1316,26 +1425,16 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
             <div class="about-text">
-                <h3>UI/UX Designer & Developer</h3>
+                <h3>Turning complexity into clarity</h3>
                 <p>
-                    I'm a passionate designer and developer based in Mexico City, specializing in creating
-                    intuitive digital experiences that bridge the gap between users and technology.
+                    I design and build digital products that people actually enjoy using. Based in Mexico City, I specialize in healthcare AI, fintech, and enterprise solutions—turning tangled problems into simple, powerful experiences.
                 </p>
                 <p>
-                    With expertise in healthcare AI, fintech, and enterprise solutions, I transform complex
-                    problems into elegant, user-centered designs. My work combines strategic thinking with
-                    technical implementation to deliver impactful results.
+                    My approach? Strategic thinking meets hands-on execution. From Figma prototypes to production-ready code, I handle the full journey—always keeping users at the center and business goals in sight.
                 </p>
             </div>
-            <div class="about-text">
-                <p>
-                    I leverage cutting-edge AI tools and frameworks to enhance my design and development workflow,
-                    ensuring that every project benefits from the latest technological advancements.
-                </p>
-                <p>
-                    From Figma prototypes to React applications, I bring a full-stack mindset to every challenge,
-                    always focusing on user needs and business goals.
-                </p>
+            <div class="about-image">
+                <img src="My picture/about.jpeg" alt="Lisandro Alvo">
             </div>
         </div>
     </section>
@@ -1379,36 +1478,132 @@
     <!-- Skills Section -->
     <section id="skills">
         <h2 class="section-title">Skills & Expertise</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">🎨</div>
-                <h3>UI/UX Design</h3>
-                <p>User research, wireframing, prototyping, and visual design</p>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+                </div>
+                <h4>Figma</h4>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">⚡</div>
-                <h3>Figma & Design Tools</h3>
-                <p>Advanced prototyping, components, and design systems</p>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg" alt="Adobe XD">
+                </div>
+                <h4>Adobe XD</h4>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">💻</div>
-                <h3>Frontend Development</h3>
-                <p>HTML, CSS, JavaScript, React, responsive design</p>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" alt="Illustrator">
+                </div>
+                <h4>Illustrator</h4>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">🤖</div>
-                <h3>AI Integration</h3>
-                <p>AI workflow design, prompt engineering, ML interfaces</p>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" alt="Photoshop">
+                </div>
+                <h4>Photoshop</h4>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">🗄️</div>
-                <h3>Backend & Database</h3>
-                <p>Supabase, Firebase, Node.js, API integration</p>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-plain.svg" alt="After Effects">
+                </div>
+                <h4>After Effects</h4>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">📊</div>
-                <h3>Healthcare Tech</h3>
-                <p>HIPAA compliance, medical workflows, clinical systems</p>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/Procreate.svg" alt="Procreate">
+                </div>
+                <h4>Procreate</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+                </div>
+                <h4>HTML</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+                </div>
+                <h4>CSS</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                </div>
+                <h4>JavaScript</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
+                </div>
+                <h4>VS Code</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/claude.svg" alt="Claude">
+                </div>
+                <h4>Claude</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/windsurf.svg" alt="Windsurf">
+                </div>
+                <h4>Windsurf</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/lovable.svg" alt="Lovable">
+                </div>
+                <h4>Lovable</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/midjourney.svg" alt="Midjourney">
+                </div>
+                <h4>Midjourney</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/sora.svg" alt="Sora">
+                </div>
+                <h4>Sora</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/240px-ChatGPT_logo.svg.png" alt="ChatGPT">
+                </div>
+                <h4>ChatGPT</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/gemini.svg" alt="Gemini">
+                </div>
+                <h4>Gemini</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/github.svg" alt="GitHub">
+                </div>
+                <h4>GitHub</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/notion.svg" alt="Notion">
+                </div>
+                <h4>Notion</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/Jira.svg" alt="Jira">
+                </div>
+                <h4>Jira</h4>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <img src="Skills logos/Nomad.svg" alt="Nomad">
+                </div>
+                <h4>Nomad</h4>
             </div>
         </div>
     </section>
