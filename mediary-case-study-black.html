@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIARY - AI Note-Taker for Doctors | Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 16px 32px;
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #60A5FA;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 100px;
+            color: #60A5FA;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #60A5FA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        section {
+            padding: 100px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 32px;
+            color: #ffffff;
+        }
+
+        .section-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+        }
+
+        /* Image Container */
+        .image-container {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            margin: 60px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #60A5FA;
+        }
+
+        .content-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 60px;
+        }
+
+        .back-button:hover {
+            background: rgba(96, 165, 250, 0.1);
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateX(-4px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-meta {
+                gap: 24px;
+            }
+            
+            .nav {
+                gap: 16px;
+                padding: 12px 24px;
+            }
+            
+            .nav a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="portfolio-premium.html#hero">Home</a>
+        <a href="portfolio-premium.html#work">Work</a>
+        <a href="portfolio-premium.html#contact">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="project-tag">Case Study</span>
+            <h1 class="hero-title">MEDIARY</h1>
+            <p class="hero-subtitle">AI-Powered Note-Taker for Healthcare Professionals</p>
+            
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Senior UI/UX Designer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Industry</div>
+                    <div class="meta-value">Healthcare AI</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">Jun 2024 - Nov 2025</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Platform</div>
+                    <div class="meta-value">Web & Mobile</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section>
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-text">
+            Mediary is an innovative AI-powered platform designed to revolutionize clinical documentation for healthcare professionals. 
+            The system uses advanced speech recognition and natural language processing to automatically transcribe and structure 
+            doctor-patient conversations into comprehensive medical notes.
+        </p>
+        <p class="section-text">
+            As the Senior UI/UX Designer, I led the design strategy, creating an intuitive interface that prioritizes speed, 
+            accuracy, and HIPAA compliance while reducing documentation time by up to 70%.
+        </p>
+    </section>
+
+    <!-- Challenge Section -->
+    <section>
+        <h2 class="section-title">The Challenge</h2>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Time Constraints</h3>
+                <p>Doctors spend 2-3 hours daily on documentation, reducing patient care time and contributing to burnout.</p>
+            </div>
+            <div class="content-card">
+                <h3>Privacy & Security</h3>
+                <p>Medical records require strict HIPAA compliance and secure data handling for patient privacy protection.</p>
+            </div>
+            <div class="content-card">
+                <h3>Accuracy Requirements</h3>
+                <p>Clinical documentation must be precise, comprehensive, and formatted according to medical standards.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section>
+        <h2 class="section-title">The Solution</h2>
+        <p class="section-text">
+            We designed a streamlined workflow that allows doctors to focus on patient care while AI handles the documentation. 
+            The interface features real-time transcription, smart templates, and one-click note generation.
+        </p>
+        
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Real-Time Transcription</h3>
+                <p>Live audio-to-text conversion with medical terminology recognition and automatic formatting.</p>
+            </div>
+            <div class="content-card">
+                <h3>Smart Templates</h3>
+                <p>Customizable SOAP note templates that adapt to different specialties and documentation needs.</p>
+            </div>
+            <div class="content-card">
+                <h3>Seamless Integration</h3>
+                <p>Direct integration with major EHR systems for one-click export and minimal workflow disruption.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section>
+        <h2 class="section-title">Impact & Results</h2>
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>70% Time Saved</h3>
+                <p>Average documentation time reduced from 15 minutes to under 5 minutes per patient encounter.</p>
+            </div>
+            <div class="content-card">
+                <h3>95% Accuracy</h3>
+                <p>AI-powered transcription achieves 95% accuracy on medical terminology with continuous improvement.</p>
+            </div>
+            <div class="content-card">
+                <h3>500+ Doctors</h3>
+                <p>Successfully onboarded across multiple healthcare facilities with 4.8/5 satisfaction rating.</p>
+            </div>
+        </div>
+        
+        <a href="portfolio-premium.html#work" class="back-button">
+            ← Back to Portfolio
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Lisandro Alvo. All rights reserved.</p>
+    </footer>
+</body>
+</html>
