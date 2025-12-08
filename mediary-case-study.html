@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediary - Case Study | Lisandro Alvo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Background Canvas */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Cursor Glow */
+        .cursor-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.4), rgba(139, 92, 246, 0.3) 30%, transparent 70%);
+            filter: blur(80px);
+            mix-blend-mode: screen;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 32px;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: #ffffff;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60A5FA, #8B5CF6);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .case-hero {
+            padding: 160px 80px 80px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 32px;
+            filter: drop-shadow(0 10px 40px rgba(96, 165, 250, 0.3));
+        }
+
+        .case-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60A5FA, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .case-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 800px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        .case-tags {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Project Info Grid */
+        .project-info {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #60A5FA;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #60A5FA, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-text {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+
+        /* Image Container */
+        .image-container {
+            margin: 60px 0;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin: 60px 0;
+        }
+
+        /* Problem & Solution Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin: 60px 0;
+        }
+
+        .card {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(96, 165, 250, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #60A5FA;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #60A5FA, #3B82F6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 80px 0 40px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(96, 165, 250, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .case-title {
+                font-size: 3rem;
+            }
+
+            .project-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-column,
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .case-hero,
+            .content-section {
+                padding: 100px 24px 40px;
+            }
+
+            .case-title {
+                font-size: 2rem;
+            }
+
+            .case-subtitle {
+                font-size: 1.125rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .nav {
+                gap: 20px;
+                padding: 12px 20px;
+            }
+
+            .nav a {
+                font-size: 13px;
+            }
+
+            .project-info {
+                grid-template-columns: 1fr;
+                padding: 0 24px;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Canvas -->
+    <canvas id="background-canvas"></canvas>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="portfolio-premium.html">Home</a>
+        <a href="portfolio-premium.html#work">Work</a>
+        <a href="portfolio-premium.html#about">About</a>
+        <a href="portfolio-premium.html#contact">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="case-hero">
+        <img src="mediary/MediLogo.svg" alt="Mediary Logo" class="case-logo">
+        <h1 class="case-title">Mediary</h1>
+        <p class="case-subtitle">
+            Revolutionizing medical consultations with AI-powered voice transcription and intelligent documentation
+        </p>
+        <div class="case-tags">
+            <span class="tag">UX/UI Design</span>
+            <span class="tag">Health Tech</span>
+            <span class="tag">AI Integration</span>
+            <span class="tag">Mobile Design</span>
+        </div>
+    </section>
+
+    <!-- Project Info -->
+    <div class="project-info">
+        <div class="info-item">
+            <div class="info-label">Role</div>
+            <div class="info-value">Lead UX/UI Designer</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Duration</div>
+            <div class="info-value">6 Months</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Platform</div>
+            <div class="info-value">iOS & Android</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Year</div>
+            <div class="info-value">2024</div>
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-text">
+            Mediary is a cutting-edge healthcare application designed to transform how medical professionals conduct and document patient consultations. By leveraging advanced AI voice recognition technology, Mediary eliminates the burden of manual note-taking, allowing doctors to focus entirely on patient care while the system automatically transcribes, organizes, and structures medical encounters.
+        </p>
+        <p class="section-text">
+            The platform addresses one of healthcare's most persistent challenges: the administrative overhead that takes doctors away from patient interaction. With Mediary, physicians can conduct natural conversations with patients while the AI intelligently captures symptoms, diagnoses, treatment plans, and follow-up instructions in real-time.
+        </p>
+
+        <div class="image-container">
+            <img src="mediary/Mock1.jpg" alt="Mediary App Mockup">
+            <div class="image-caption">Mediary mobile interface showcasing the consultation dashboard</div>
+        </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section class="content-section">
+        <h2 class="section-title">Problem & Solution</h2>
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">⚠️</div>
+                <h3 class="card-title">The Problem</h3>
+                <p class="card-text">
+                    Medical professionals spend 30-50% of their consultation time on documentation rather than patient care. Manual note-taking leads to incomplete records, transcription errors, and physician burnout. Traditional EHR systems are clunky and interrupt the natural flow of doctor-patient communication.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">✨</div>
+                <h3 class="card-title">The Solution</h3>
+                <p class="card-text">
+                    Mediary uses AI-powered voice recognition to automatically transcribe and structure medical consultations. The system intelligently categorizes information into relevant medical sections, generates structured SOAP notes, and integrates seamlessly with existing healthcare workflows, reducing documentation time by 80%.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">Impact</h3>
+                <p class="card-text">
+                    Doctors save an average of 2 hours per day on documentation, allowing more time for patient care. Medical records are more comprehensive and accurate. Patient satisfaction increased by 35% as physicians maintain better eye contact and engagement during consultations.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🚀</div>
+                <h3 class="card-title">Innovation</h3>
+                <p class="card-text">
+                    First-of-its-kind medical AI that understands context, medical terminology, and patient narratives. The system learns from each doctor's preferences and adapts its documentation style accordingly, creating personalized, efficient workflows.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="content-section">
+        <h2 class="section-title">Key Features</h2>
+        
+        <div class="two-column">
+            <div>
+                <h3 class="card-title">🎙️ Real-Time Voice Transcription</h3>
+                <p class="section-text">
+                    Advanced speech-to-text engine specifically trained on medical terminology and conversations, capturing every detail with 98% accuracy.
+                </p>
+
+                <h3 class="card-title">📋 Intelligent Documentation</h3>
+                <p class="section-text">
+                    Automatically structures consultation notes into SOAP format (Subjective, Objective, Assessment, Plan), ready for EMR integration.
+                </p>
+
+                <h3 class="card-title">🔐 HIPAA Compliant</h3>
+                <p class="section-text">
+                    End-to-end encryption and strict privacy controls ensure patient data is always protected and compliant with healthcare regulations.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="card-title">📊 Patient History</h3>
+                <p class="section-text">
+                    Quick access to previous consultations, medications, and treatment history, providing complete context for every encounter.
+                </p>
+
+                <h3 class="card-title">🔄 EMR Integration</h3>
+                <p class="section-text">
+                    Seamless integration with major Electronic Medical Record systems, eliminating duplicate data entry and streamlining workflows.
+                </p>
+
+                <h3 class="card-title">📱 Multi-Platform</h3>
+                <p class="section-text">
+                    Available on iOS, Android, and web, ensuring doctors can access patient information and document encounters from any device.
+                </p>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <img src="mediary/Mock2.png" alt="Mediary Features">
+            <div class="image-caption">Comprehensive feature set designed for modern medical practice</div>
+        </div>
+    </section>
+
+    <!-- Design Process -->
+    <section class="content-section">
+        <h2 class="section-title">Design Process</h2>
+        <p class="section-text">
+            The design process was deeply rooted in understanding the real needs of medical professionals through extensive user research, shadowing sessions in clinics, and iterative testing with actual physicians.
+        </p>
+
+        <div class="image-container">
+            <img src="mediary/Frame 126.svg" alt="Design Process">
+            <div class="image-caption">User flow and information architecture</div>
+        </div>
+
+        <div class="image-container">
+            <img src="mediary/Calendar.svg" alt="Calendar Interface">
+            <div class="image-caption">Appointment scheduling and management interface</div>
+        </div>
+
+        <div class="image-container">
+            <img src="mediary/New Encounter.svg" alt="New Encounter Screen">
+            <div class="image-caption">Starting a new patient encounter with voice recording</div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="content-section">
+        <h2 class="section-title">Results & Impact</h2>
+        <p class="section-text">
+            Since launch, Mediary has been adopted by over 500 medical professionals across 50 clinics, processing more than 100,000 patient encounters. The platform has demonstrated measurable improvements in clinical efficiency, documentation quality, and patient satisfaction.
+        </p>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3 class="card-title">80%</h3>
+                <p class="card-text">Reduction in documentation time</p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">35%</h3>
+                <p class="card-text">Increase in patient satisfaction</p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">98%</h3>
+                <p class="card-text">Transcription accuracy rate</p>
+            </div>
+            <div class="card">
+                <h3 class="card-title">500+</h3>
+                <p class="card-text">Active medical professionals</p>
+            </div>
+        </div>
+
+        <a href="portfolio-premium.html" class="back-btn">
+            ← Back to Portfolio
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Lisandro Alvo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Background Canvas System
+        const bgCanvas = document.getElementById('background-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const cursorGlow = document.getElementById('cursorGlow');
+
+        bgCanvas.width = window.innerWidth;
+        bgCanvas.height = window.innerHeight;
+
+        const globalMouse = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            vx: 0,
+            vy: 0
+        };
+
+        // Particles
+        const particles = [];
+        const particleCount = 50;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * bgCanvas.width;
+                this.y = Math.random() * bgCanvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > bgCanvas.width) this.x = 0;
+                if (this.x < 0) this.x = bgCanvas.width;
+                if (this.y > bgCanvas.height) this.y = 0;
+                if (this.y < 0) this.y = bgCanvas.height;
+            }
+
+            draw() {
+                bgCtx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                bgCtx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBackground() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw connections
+            particles.forEach((a, i) => {
+                particles.slice(i + 1).forEach(b => {
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        bgCtx.strokeStyle = `rgba(96, 165, 250, ${0.1 * (1 - distance / 150)})`;
+                        bgCtx.lineWidth = 0.5;
+                        bgCtx.beginPath();
+                        bgCtx.moveTo(a.x, a.y);
+                        bgCtx.lineTo(b.x, b.y);
+                        bgCtx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        animateBackground();
+
+        // Cursor glow effect
+        document.addEventListener('mousemove', (e) => {
+            globalMouse.x = e.clientX;
+            globalMouse.y = e.clientY;
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+            cursorGlow.style.opacity = '1';
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
