@@ -210,6 +210,112 @@
             margin: 60px auto;
         }
 
+        /* Horizontal Image Row */
+        .image-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-row img {
+            flex: 0 1 calc(25% - 15px);
+            max-width: calc(25% - 15px);
+            height: auto;
+            border-radius: 16px;
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .image-row img {
+                flex: 0 1 calc(50% - 10px);
+                max-width: calc(50% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .image-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .image-row img {
+                flex: 0 1 100%;
+                max-width: 80%;
+            }
+        }
+
+        /* Progress Chart Styles */
+        .progress-chart {
+            width: 100%;
+            height: 120px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .circular-progress {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .circular-progress .bg-circle {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .circular-progress .progress-circle {
+            stroke: url(#blueGradient);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+
+        .bar-chart {
+            width: 100%;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #60A5FA, #3B82F6);
+            border-radius: 12px;
+            transition: width 1.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 16px;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
+        }
+
+        .counter-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .counter-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
         /* Hero Mockup */
         .hero-mockup {
             max-width: 400px;
@@ -682,16 +788,13 @@
             </div>
         </div>
 
-        <img src="mediary/READY MOCKS/E&M.png" alt="E&M Coding Level Interface" class="mobile-size">
-        <p class="image-caption">E&M coding level calculation based on medical decision-making factors</p>
+        <div class="image-row">
+            <img src="mediary/READY MOCKS/2.png" alt="Mediary Feature Flow">
+            <img src="mediary/READY MOCKS/3.png" alt="Mediary Voice Recording">
+        </div>
+        <p class="image-caption">Key feature interfaces: navigation flow and voice recording</p>
 
-        <img src="mediary/READY MOCKS/2.png" alt="Mediary Feature Flow" class="mobile-size">
-        <p class="image-caption">Interactive feature walkthrough and navigation</p>
-
-        <img src="mediary/READY MOCKS/3.png" alt="Mediary Voice Recording" class="mobile-size">
-        <p class="image-caption">Voice recording interface with real-time transcription</p>
-
-        <img src="mediary/READY MOCKS/4.png" alt="Mediary Desktop Dashboard">
+        <img src="mediary/READY MOCKS/4.png" alt="Mediary Desktop Dashboard" style="max-width: 90%; margin: 60px auto; display: block; border-radius: 16px;">
         <p class="image-caption">Comprehensive desktop dashboard for medical professionals</p>
     </section>
 
@@ -748,24 +851,65 @@
             Since launch, Mediary has been adopted by over 500 medical professionals across 50 clinics, processing more than 100,000 patient encounters. The platform has demonstrated measurable improvements in clinical efficiency, documentation quality, and patient satisfaction.
         </p>
 
+        <svg style="position: absolute; width: 0; height: 0;">
+            <defs>
+                <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+
         <div class="card-grid">
             <div class="card">
+                <div class="circular-progress">
+                    <svg width="100" height="100">
+                        <circle class="bg-circle" cx="50" cy="50" r="42"></circle>
+                        <circle class="progress-circle" cx="50" cy="50" r="42" 
+                                style="stroke-dasharray: 264; stroke-dashoffset: 53;"></circle>
+                    </svg>
+                </div>
                 <h3 class="card-title">80%</h3>
                 <p class="card-text">Reduction in documentation time</p>
             </div>
             <div class="card">
-                <h3 class="card-title">35%</h3>
+                <div class="bar-chart">
+                    <div class="bar-fill" style="width: 35%;">
+                        <span style="color: white; font-weight: 700; font-size: 1.25rem;">35%</span>
+                    </div>
+                </div>
+                <h3 class="card-title" style="margin-top: 0;">35%</h3>
                 <p class="card-text">Increase in patient satisfaction</p>
             </div>
             <div class="card">
+                <div class="circular-progress">
+                    <svg width="100" height="100">
+                        <circle class="bg-circle" cx="50" cy="50" r="42"></circle>
+                        <circle class="progress-circle" cx="50" cy="50" r="42" 
+                                style="stroke-dasharray: 264; stroke-dashoffset: 5;"></circle>
+                    </svg>
+                </div>
                 <h3 class="card-title">98%</h3>
                 <p class="card-text">Transcription accuracy rate</p>
             </div>
             <div class="card">
+                <div class="counter-chart">
+                    <div class="counter-icon">👥</div>
+                    <div style="width: 100%; height: 40px; background: linear-gradient(90deg, transparent, #60A5FA 20%, #3B82F6 80%, transparent); border-radius: 8px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite;"></div>
+                    </div>
+                </div>
                 <h3 class="card-title">500+</h3>
                 <p class="card-text">Active medical professionals</p>
             </div>
         </div>
+
+        <style>
+            @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+        </style>
 
         <div style="text-align: center; margin-top: 80px;">
             <h3 class="card-title" style="font-size: 1.75rem; margin-bottom: 24px;">🌐 Live Website</h3>
